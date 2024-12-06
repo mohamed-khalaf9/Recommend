@@ -33,7 +33,16 @@ class UsersPdo{
         ':brief' => $brief,
         ':date' => $date,
     ]);
-}
+    }
+
+    public function getUserByEmail($email) {
+        $stmt = $this->pdo->prepare("SELECT * FROM users WHERE email = :email");
+        $stmt->execute(['email' => $email]);
+        return $stmt->fetch(PDO::FETCH_ASSOC); 
+    }
+
+
+ 
 
 
 }
