@@ -1,0 +1,8 @@
+{
+    "name": "yourvendor/api",
+    "description": "Your API description",
+    "version": "1.0.0",
+    "require": {
+        "firebase/php-jwt": "^5.5"
+    }
+}
