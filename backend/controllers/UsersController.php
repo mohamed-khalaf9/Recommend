@@ -29,12 +29,71 @@ class UsersController{
 
     function signup($data): void{
 
+        // Validate required fields
+        $requiredFields = ['name', 'email', 'password', 'education', 'brief', 'date'];
+        foreach ($requiredFields as $field) {
+        if (empty($data[$field])) {
+            HttpResponse::send(400, null, ["error" => "$field is required"]);
+            return;
+        }
+        }
+
+        // Validate email format
+        if (!filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
+        HttpResponse::send(400, null, ["error" => "Invalid email format"]);
+        return;
+     }
+
+     $data['password'] = password_hash($data['password'], PASSWORD_BCRYPT);
+
+     if ($this->usersPdo->isEmailTaken($data['email'])) {
+        HttpResponse::send(409, null, ["error" => "Email already registered"]);
+        return;
+    }
+    $created = $this->usersPdo->createUser(
+        $data['name'],
+        $data['email'],
+        $data['password'],
+        $data['education'],
+        $data['brief'],
+        $data['date']
+    );
+
+    if ($created) {
+        HttpResponse::send(201, null, ["message" => "Signup successful"]);
+    } else {
+        HttpResponse::send(500, null, ["error" => "Internal server error"]);
+    }
+
     }
 
 
 
 
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    }
+
+
+
+
 
 
 
