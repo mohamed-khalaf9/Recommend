@@ -19,7 +19,8 @@ class UsersController{
         {
             if(count($data)== 6)
             $this->signup($data);
-
+            else if(count($data)==2)
+            $this->login($data);
             else{
                 http_response_code(404);
                 echo json_encode(["error" => "Data is not valid"]);
@@ -66,6 +67,15 @@ class UsersController{
     } else {
         HttpResponse::send(500, null, ["error" => "Internal server error"]);
     }
+
+    }
+
+    function login($data): void{
+        
+
+
+
+
 
     }
 
