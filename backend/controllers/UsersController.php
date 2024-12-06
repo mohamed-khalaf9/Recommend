@@ -3,6 +3,7 @@
 include_once 'db.php';
 include_once 'pdos/UsersPdo.php';
 include_once 'httpResponse.php';
+include_once 'jwtHelper.php';
 class UsersController{
     private $usersPdo;
 
@@ -71,11 +72,25 @@ class UsersController{
     }
 
     function login($data): void{
+        if (empty($data['email']) || empty($data['password'])) {
+            HttpResponse::send(400, null, ['error' => 'Email and password are required.']);
+            return;
+        }
+
+        $email = $data['email'];
+        $password = $data['password'];
+
         
+        $user = $this->usersPdo->getUserByEmail($email);
+        $userId = $user['id'];
 
-
-
-
+        if ($user && password_verify($password, $user['password'])) {
+            $token = JwtHelper::createToken($userId); 
+            
+            HttpResponse::send(200, null, ['message' => 'Login successful', 'token' => $token]);
+        } else {
+            HttpResponse::send(401, null, ['error' => 'Invalid email or password.']);
+        }
 
     }
 
