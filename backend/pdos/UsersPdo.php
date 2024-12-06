@@ -1,6 +1,6 @@
 <?php
 
-
+include_once 'db.php';
 class UsersPdo{
     private $pdo;
 
@@ -22,7 +22,7 @@ class UsersPdo{
     
     public function createUser(string $name, string $email, string $password, string $education, string $brief, string $date): bool
 {
-    $sql = "INSERT INTO users (name, email, password, education, brief, date) VALUES (:name, :email, :password, :education, :brief, :date)";
+    $sql = "INSERT INTO users (name, email, password, education, brief, createdAt) VALUES (:name, :email, :password, :education, :brief, :date)";
     $stmt = $this->pdo->prepare($sql);
 
     return $stmt->execute([

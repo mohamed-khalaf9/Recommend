@@ -1,6 +1,8 @@
 <?php
 
-
+include_once 'db.php';
+include_once 'pdos/UsersPdo.php';
+include_once 'httpResponse.php';
 class UsersController{
     private $usersPdo;
 
