@@ -20,6 +20,21 @@ class UsersPdo{
         return $result['count'] > 0; 
     }
     
+    public function createUser(string $name, string $email, string $password, string $education, string $brief, string $date): bool
+{
+    $sql = "INSERT INTO users (name, email, password, education, brief, date) VALUES (:name, :email, :password, :education, :brief, :date)";
+    $stmt = $this->pdo->prepare($sql);
+
+    return $stmt->execute([
+        ':name' => $name,
+        ':email' => $email,
+        ':password' => $password, 
+        ':education' => $education,
+        ':brief' => $brief,
+        ':date' => $date,
+    ]);
+}
+
 
 }
 
