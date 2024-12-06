@@ -10,6 +10,17 @@ class UsersPdo{
         
     }
 
+    public function isEmailTaken(string $email): bool
+    {
+        $sql = "SELECT COUNT(*) AS count FROM users WHERE email = :email";
+        $stmt = $this->pdo->prepare($sql); 
+        $stmt->execute([':email' => $email]); 
+        $result = $stmt->fetch(PDO::FETCH_ASSOC); 
+    
+        return $result['count'] > 0; 
+    }
+    
+
 }
 
 
