@@ -38,6 +38,20 @@ class MembersController{
 }
 
 
+public function isUserMember(int $userId, int $circleId): bool
+{
+    try {
+        // check membership
+       
+       $member = $this->membersPdo->getMemberByUserAndCircle($userId, $circleId);
+        return $member !== null;
+    } catch (Exception $e) {
+        return false;
+    }
+}
+
+
+
 
 
 

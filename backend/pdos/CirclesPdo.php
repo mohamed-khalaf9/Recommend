@@ -28,6 +28,20 @@ class CirclesPdo{
 }
 
 
+public function getCircleById(int $circleId): ?array
+{
+    $query = "SELECT * FROM circles WHERE id = :circleId";
+    $stmt = $this->pdo->prepare($query);
+    $stmt->bindParam(':circleId', $circleId, PDO::PARAM_INT);
+    $stmt->execute();
+
+    $circle = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    return $circle ?: null; // Return circle details or null if not found
+}
+
+
+
 
 
 
