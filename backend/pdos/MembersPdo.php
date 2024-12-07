@@ -29,6 +29,87 @@ class MembersPdo{
 
     }
 
+    public function getMemberByUserAndCircle(int $userId, int $circleId): ?array
+{
+    $query = "SELECT * FROM members WHERE userId = :userId AND circleId = :circleId";
+    $stmt = $this->pdo->prepare($query);
+
+    // Bind parameters to the query
+    $stmt->bindParam(':userId', $userId, PDO::PARAM_INT);
+    $stmt->bindParam(':circleId', $circleId, PDO::PARAM_INT);
+
+    $stmt->execute();
+
+    // Fetch the result as an associative array
+    $member = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    // Return the member record or null if not found
+    return $member ?: null;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
 
 
