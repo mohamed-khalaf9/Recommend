@@ -10,9 +10,15 @@ class MembersController{
         $this->membersPdo = new MembersPdo($pdo);
     }
 
+    public function is_member($userId):bool{
+          return $this->membersPdo->is_member($userId);
+    }
+    
+    
     function processRequest($method,$userId,$id,$data){
 
     }
+   
 
 
 
