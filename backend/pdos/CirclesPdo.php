@@ -41,6 +41,22 @@ public function getCircleById(int $circleId): ?array
 }
 
 
+public function getUserCircles(int $userId): array {
+    $query = "
+        SELECT c.id, c.name, c.description AS desc, m.role 
+        FROM members m
+        JOIN circles c ON m.circleId = c.id
+        WHERE m.userId = :userId
+    ";
+
+    $stmt = $this->pdo->prepare($query);
+    $stmt->bindParam(':userId', $userId, PDO::PARAM_INT);
+    $stmt->execute();
+
+    return $stmt->fetchAll(PDO::FETCH_ASSOC) ?: [];
+}
+
+
 
 
 
