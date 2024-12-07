@@ -43,7 +43,7 @@ public function getCircleById(int $circleId): ?array
 
 public function getUserCircles(int $userId): array {
     $query = "
-        SELECT c.id, c.name, c.description AS desc, m.role 
+        SELECT c.id, c.name, c.`description` AS `desc`, m.role 
         FROM members m
         JOIN circles c ON m.circleId = c.id
         WHERE m.userId = :userId
