@@ -42,6 +42,37 @@ public function getRequestByUserAndCircle(int $userId, int $circleId): ?array
     return $request ?: null;
 }
 
+public function getJoinRequestsByUserId(int $userId): array
+{
+    $query = "
+        SELECT 
+            r.id, 
+            r.circleId, 
+            c.name AS circleName, 
+            c.description AS circleDesc, 
+            r.status, 
+            r.createdAt
+        FROM 
+            requests r
+        INNER JOIN 
+            circles c 
+        ON 
+            r.circleId = c.id
+        WHERE 
+            r.userId = :userId
+        ORDER BY 
+            r.createdAt DESC
+    ";
+
+    $stmt = $this->pdo->prepare($query);
+    $stmt->bindParam(':userId', $userId, PDO::PARAM_INT);
+    $stmt->execute();
+
+    
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
+
 
 
 

@@ -17,6 +17,11 @@ class RequestsController{
         {
             $this->joinCircle($userId,$id);
         }
+        else if($method=="GET" && empty($id)&& empty($data))
+        {
+            $this->getJoinRequests($userId);
+        }
+        
 
 
     }
@@ -69,6 +74,31 @@ class RequestsController{
     } catch (Exception $e) {
         HttpResponse::send(500, null, ['error' => 'An unexpected error occurred.', 'details' => $e->getMessage()]);
     }
+}
+
+function getJoinRequests($userId)
+{
+    try {
+
+        
+        $joinRequests = $this->reqsPdo->getJoinRequestsByUserId($userId);
+
+
+        if (empty($joinRequests)) {
+            HttpResponse::send(404, null, ['message' => 'No join requests found for this user.']);
+            return;
+        }
+
+        HttpResponse::send(200, null,$joinRequests);
+    } catch (Exception $e) {
+        HttpResponse::send(500, null, ['error' => 'An unexpected error occurred.', 'details' => $e->getMessage()]);
+    }
+
+
+
+
+
+
 }
 
 
