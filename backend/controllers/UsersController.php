@@ -15,7 +15,7 @@ class UsersController{
     }
 
 
-    function processRequest($method,$data){
+    function processRequest($method,$userId,$data){
         if($method== "POST")
         {
             if(count($data)== 6)
@@ -27,6 +27,12 @@ class UsersController{
                 echo json_encode(["error" => "Data is not valid"]);
 
             }
+        }
+        else if($method=="GET"&&empty($id)&&empty($data))
+        {
+            $this->getUsersInfo($userId);
+
+
         }
 
     }
@@ -91,6 +97,11 @@ class UsersController{
         } else {
             HttpResponse::send(401, null, ['error' => 'Invalid email or password.']);
         }
+
+    }
+
+    function getUsersInfo($userId)
+    {
 
     }
 
