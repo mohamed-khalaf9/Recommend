@@ -12,8 +12,31 @@ class CirclesController{
     }
 
     function processRequest($method,$userId,$id,$data){
+        if($method=="POST" && empty($id))
+        {
+            if(count($data)==3)
+            {
+                $this->createCircle($data,$userId);
+            }
+            
+        }
 
     }
+
+    function createCircle($data,$userId)
+    {
+
+    }
+
+
+
+
+
+
+
+
+
+
 
 
 
