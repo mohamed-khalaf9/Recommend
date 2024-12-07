@@ -68,6 +68,21 @@ class CirclesController{
 
     }
 
+    public function isCircleExists(int $circleId): bool
+{
+    
+    if ($circleId <= 0) {
+        return false; 
+    }
+
+    try {  
+        $circle = $this->circlesPdo->getCircleById($circleId);
+        return $circle !== null;
+    } catch (Exception $e) {
+        return false; 
+    }
+}
+
 
    
 
