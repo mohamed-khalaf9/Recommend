@@ -21,10 +21,7 @@ class CirclesController{
             }
 
         }
-        else if($method=="POST"&& isset($id)&& empty($data))
-        {
-            $this->joinCricle($userId,$id);
-        }
+       
 
     }
 
@@ -72,10 +69,7 @@ class CirclesController{
     }
 
 
-    function joinCricle($userId,$circleId)
-    {
-
-    }
+   
 
     
 
