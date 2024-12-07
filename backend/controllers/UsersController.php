@@ -102,6 +102,18 @@ class UsersController{
 
     function getUsersInfo($userId)
     {
+        try {
+            
+            $userProfile = $this->usersPdo->getUserProfile($userId);
+
+            if ($userProfile) {
+                HttpResponse::send(200, null, $userProfile); 
+            } else {
+                HttpResponse::send(404, null, ['error' => 'User not found.']);
+            }
+        } catch (Exception $e) {
+            HttpResponse::send(500, null, ['error' => 'Failed to fetch user profile.', 'details' => $e->getMessage()]);
+        }
 
     }
 
