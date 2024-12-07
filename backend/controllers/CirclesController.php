@@ -21,6 +21,11 @@ class CirclesController{
             }
 
         }
+        else if($method == "GET" && empty($id) && empty($data))
+        {
+            $this->getUserCircles($userId);
+
+        }
        
 
     }
@@ -81,6 +86,11 @@ class CirclesController{
     } catch (Exception $e) {
         return false; 
     }
+}
+
+function getUserCircles($userId)
+{
+
 }
 
 
