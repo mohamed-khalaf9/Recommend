@@ -21,6 +21,11 @@ class CirclesController{
             }
 
         }
+        else if($method == "GET" && empty($id) && empty($data))
+        {
+            $this->getUserCircles($userId);
+
+        }
        
 
     }
@@ -81,6 +86,33 @@ class CirclesController{
     } catch (Exception $e) {
         return false; 
     }
+}
+
+function getUserCircles($userId)
+{
+    try {
+        $circles = $this->circlesPdo->getUserCircles($userId);
+
+        if (empty($circles)) {
+            HttpResponse::send(404, null, ['error' => 'No circles found for this user.']);
+            return;
+        }
+
+        
+        $response = array_map(function ($circle) {
+            return [
+                'id' => $circle['id'],
+                'name' => $circle['name'],
+                'desc' => $circle['desc'],
+                'role' => $circle['role']
+            ];
+        }, $circles);
+
+        HttpResponse::send(200, null, $response);
+    } catch (Exception $e) {
+        HttpResponse::send(500, null, ['error' => 'Failed to fetch circles.', 'details' => $e->getMessage()]);
+    }
+
 }
 
 
