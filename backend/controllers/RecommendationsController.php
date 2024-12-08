@@ -31,7 +31,7 @@ class RecommendationsController{
             HttpResponse::send(403,null,["error"=>"You are not a member of this circle"]);
         }
         else{
-            if(count($data)>0&&$method=='POST'){
+            if($method=='POST'&&count($data)>0){
                 $this->create_recommendation($data,$userId,$id);
             }
             elseif($method=='GET'){
