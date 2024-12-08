@@ -77,6 +77,9 @@ class RecommendationsController{
        }
           
     }
+    public function is_found($rcmmndId):bool{
+        return $this->recsPdo->is_found($rcmmndId);
+    }
     function get_recommendations(){
         $recommendations=$this->recsPdo->get_recommendations();
         if(empty($recommendations)){
