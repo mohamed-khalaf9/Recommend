@@ -38,7 +38,7 @@ class RecommendationsController{
                  $this->get_recommendations();
             }
             else{
-                $this->add_like($method,$userId,$id,$data);
+                HttpResponse::send(404,null,["error"=>"Not found"]);
             }
         }
         }
@@ -80,15 +80,13 @@ class RecommendationsController{
     function get_recommendations(){
         $recommendations=$this->recsPdo->get_recommendations();
         if(empty($recommendations)){
-            HttpResponse::send(200,null,["error"=>"No recommendations found at the moment"]);
+            HttpResponse::send(404,null,["error"=>"No recommendations found at the moment"]);
         }
         else{
             HttpResponse::send(200,null,["recommendations "=>$recommendations]);
       }
 }
-    function add_like(){
-
-    }
+    
 
     
 
