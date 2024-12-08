@@ -8,17 +8,18 @@ class MembersPdo{
         $this->pdo=$pdo;
         
     }
-    public function is_member($userId):bool{
-        $sql="SELECT userId FROM members WHERE userId=:userId";
+    public function is_member($userId,$circleId):bool{
+        $sql="SELECT userId FROM members WHERE userId=:userId AND circleId=:circleId";
         $stm=$this->pdo->prepare($sql);
-        $stm->execute([':userId' => $userId]);
+        $stm->execute([':userId' => $userId,':circleId'=>$circleId]);
         return $stm->fetchColumn()!==false;
       }
 
       public function get_cirle_members():array{
         try{
         $sql="SELECT m.id,m.role,u.name,u.education,u.brief,m.createdAt FROM members m  INNER JOIN users u
-        ON u.id=m.userId";
+        ON u.id=m.userId
+        AND m.role<>'Admin'";
 
         $stm=$this->pdo->prepare($sql);
         $stm->execute();

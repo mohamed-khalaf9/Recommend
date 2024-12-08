@@ -20,29 +20,29 @@ class LikesController{
     }
     
     function processRequest($method,$userId,$id,$data){
-        if (empty($id)) {
-            HttpResponse::send(400, null, ["error" => "Invalid recId"]);
-            return;
-        }
-       if(!($this->recController->is_found($id))){
-            HttpResponse::send(404,null,["error"=>"Not found"]);
-        }
-        else{
-          
-        if($method=="POST"){
+        
+        if($method=="POST"&&empty($data)&&isset($id)){
              $this->add_like($userId,$id);
         }
         else{
             HttpResponse::send(404,null,["error"=>"Not found"]);
-        }
         }
 }
     
     
 
     public function add_like( $userId, $recID){
-        
-          if($this->likesPdo->add_like($userId,$recID)){
+        if (empty($recId)) {
+            HttpResponse::send(400, null, ["error" => "recommendation ID is required."]);
+            return;
+        }
+        if(! $this->recController->is_found($recID)){
+            HttpResponse::send(400, null, ["error" => "NOT found"]);
+            return;
+        }
+
+           $success=$this->likesPdo->add_like($userId,$recID);
+          if($success){
             HttpResponse::send(201,null,["message"=>"you liked this recommendation"]);
           }
           else{

@@ -10,43 +10,46 @@ class MembersController{
         $db = new Database();
         $pdo = $db->getConnection();
         $this->membersPdo = new MembersPdo($pdo);
-        $this->circleController=new CirclesController();
-    }
+        $this->circleController=new CirclesController();    }
 
-    public function is_member($userId):bool{
-          return $this->membersPdo->is_member($userId);
+    public function is_member($userId,$circleId):bool{
+          return $this->membersPdo->is_member($userId,$circleId);
     }
     
     
     function processRequest($method,$userId,$id,$data){
-     if($id==null){
-        HttpResponse::send( 400,null,["errror" =>"circle id is required"]);
-        return;
-     }
-     if(!($this->circleController->is_exist($id))){
-        HttpResponse::send(404,null,["error"=>"Circle is not found"]);
-     }
-     else{
-        if($method=="GET"){
-            $this->get_circle_members();
-        }
-     }
-    }
-    public function get_circle_members(){
-        $members=$this->membersPdo->get_cirle_members();
-        if(empty($members)){
-            HttpResponse::send(404,null,["error"=>"No members for that circle until now"]);
-        }
-        else{
-            HttpResponse::send(200,null,["members "=>$members]);
-        }
-    }
+
+            if($method=="GET"&&empty($data)&&isset($id)){
+                $this->get_circle_members($id);
+            }
+         }
+
+        public function get_circle_members($circleId){
+            if (empty($circleId)) {
+                HttpResponse::send(400, null, ["error" => "Circle ID is required."]);
+                return;
+            }
+    
+    
+            if (!$this->circleController->is_exist($circleId)) {
+                HttpResponse::send(404, null, ["error" => "Circle not found. Please check the Circle ID."]);
+                return;
+            }
+    
+            $members=$this->membersPdo->get_cirle_members();
+            if(empty($members)){
+                HttpResponse::send(404,null,["error"=>"No members for that circle until now"]);
+            }
+            else{
+                HttpResponse::send(200,null,["members "=>$members]);
+            }
+        }        }    
    
 
 
 
 
-}
+
 
 
 
