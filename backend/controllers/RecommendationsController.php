@@ -14,16 +14,16 @@ class RecommendationsController{
         $db = new Database();
         $pdo = $db->getConnection();
         $this->recsPdo = new RecommendationsPdo($pdo);
-        $circleController=new CirclesController();
-        $memberController=new MembersController();
+        $this->circleController=new CirclesController();
+        $this->memberController=new MembersController();
     }
 
-    function processRequest($method,$userId,$id,$data){
+   public  function processRequest($method,$userId,$id,$data){
 
        if($id==null){
         HttpResponse::send(400,null,["error"=> "circle ID is required"]);
        }
-       if( !($this->circleController->is_exist($id))){
+       else if( !($this->circleController->is_exist($id))){
         HttpResponse::send(404,null,["error"=>"NOT FOUND ,check your circle id"]);
        }
        else{
@@ -46,14 +46,14 @@ class RecommendationsController{
 
     
 
-    function validate_date($date):bool{
+    private function validate_date($date):bool{
         $format='Y-m-d';
         $formateddate=DateTime::createFromFormat($format,$date);
         return $formateddate&&$formateddate->format($format)===$date;
 
     }
 
-    function create_recommendation($data,$userId,$circleId){
+    public function create_recommendation($data,$userId,$circleId){
         $fields=['title','brief','link','date'];
         foreach($fields as $field){
             if(empty($data[$field])){
