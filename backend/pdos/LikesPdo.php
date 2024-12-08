@@ -1,5 +1,5 @@
 <?php
-
+include_once 'db.php';
 class LikesPdo{
     private $pdo;
 

@@ -19,32 +19,17 @@ class RecommendationsController{
     }
 
    public  function processRequest($method,$userId,$id,$data){
-
-       if($id==null){
-        HttpResponse::send(400,null,["error"=> "circle ID is required"]);
-       }
-       else if( !($this->circleController->is_exist($id))){
-        HttpResponse::send(404,null,["error"=>"NOT FOUND ,check your circle id"]);
-       }
-       else{
-        if(!($this->memberController->is_member($userId))){
-            HttpResponse::send(403,null,["error"=>"You are not a member of this circle"]);
-        }
-        else{
-            if($method=='POST'&&count($data)>0){
+            if($method=='POST'&&isset($data)&&isset($id)){
                 $this->create_recommendation($data,$userId,$id);
             }
-            elseif($method=='GET'){
-                 $this->get_recommendations();
+            elseif($method=='GET'&&empty($data)&&isset($id)){
+                 $this->get_recommendations($userId,$id);
             }
             else{
                 HttpResponse::send(404,null,["error"=>"Not found"]);
             }
         }
-        }
-       }
-
-    
+        
 
     private function validate_date($date):bool{
         $format='Y-m-d';
@@ -54,6 +39,22 @@ class RecommendationsController{
     }
 
     public function create_recommendation($data,$userId,$circleId){
+        if (empty($circleId)) {
+            HttpResponse::send(400, null, ["error" => "Circle ID is required."]);
+            return;
+        }
+
+
+        if (!$this->circleController->is_exist($circleId)) {
+            HttpResponse::send(404, null, ["error" => "Circle not found. Please check the Circle ID."]);
+            return;
+        }
+
+
+        if (!$this->memberController->is_member($userId, $circleId)) {
+            HttpResponse::send(403, null, ["error" => "You are not a member of this circle."]);
+            return;
+        }
         $fields=['title','brief','link','date'];
         foreach($fields as $field){
             if(empty($data[$field])){
@@ -61,26 +62,41 @@ class RecommendationsController{
                 return;
             }
         }
-       if(!(self::validate_date($data['date']))){
-            $this->recsPdo->create_recommendations($data['title'],$data['brief'],$data['link'],$data['date'],$userId,$circleId);
+       if(!self::validate_date($data['date'])){
             HttpResponse::send(400,null,["error" => "Date must be in (dd,mm,yyy) format"]);
             return;
              
        }
-       else{
-        if($this->recsPdo->create_recommendations($data['title'],$data['brief'],$data['link'],$data['date'],$userId,$circleId)){
+       $success=$this->recsPdo->create_recommendations($data['title'],$data['brief'],$data['link'],$data['date'],$userId,$circleId);
+        if($success){
             HttpResponse::send(201,null,["message" => "recommendation shared successfully"]);
         }
         else{
             HttpResponse::send(500,null,["error" => "Internal server error"]);
         }
-       }
+       
           
     }
     public function is_found($rcmmndId):bool{
         return $this->recsPdo->is_found($rcmmndId);
     }
-    function get_recommendations(){
+    function get_recommendations($userId,$circleId){
+        if (empty($circleId)) {
+            HttpResponse::send(400, null, ["error" => "Circle ID is required."]);
+            return;
+        }
+
+
+        if (!$this->circleController->is_exist($circleId)) {
+            HttpResponse::send(404, null, ["error" => "Circle not found. Please check the Circle ID."]);
+            return;
+        }
+
+
+        if (!$this->memberController->is_member($userId, $circleId)) {
+            HttpResponse::send(403, null, ["error" => "You are not a member of this circle."]);
+            return;
+        }
         $recommendations=$this->recsPdo->get_recommendations();
         if(empty($recommendations)){
             HttpResponse::send(404,null,["error"=>"No recommendations found at the moment"]);
