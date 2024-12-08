@@ -17,8 +17,9 @@ class MembersPdo{
 
       public function get_cirle_members():array{
         try{
-        $sql="SELECT (m.id,m.role,u.name,u.education,u.brief,m.createdAt) FROM members m  INNER JOIN users u
+        $sql="SELECT m.id,m.role,u.name,u.education,u.brief,m.createdAt FROM members m  INNER JOIN users u
         ON u.id=m.userId";
+
         $stm=$this->pdo->prepare($sql);
         $stm->execute();
         $members=$stm->fetchAll(PDO::FETCH_ASSOC);
