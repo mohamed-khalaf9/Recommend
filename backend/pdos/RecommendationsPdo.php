@@ -28,8 +28,9 @@ class RecommendationsPdo{
     }
     public function get_recommendations():array{
       try{
-      $sql="SELECT r,id,r.title,r.brief,r.link,r.numberOfLikes,u.name FROM recommendations R INNER JOIN users u
-      ORDER BY r.date ";
+      $sql="SELECT r.id,r.title,r.brief,r.link,r.numberOfLikes,u.name FROM recommendations r INNER JOIN users u
+      ON r.userId = u.id
+      ORDER BY r.createdAt ";
       $stm=$this->pdo->prepare($sql);
       $stm->execute();
       $recommendations=$stm->fetchAll(PDO::FETCH_ASSOC);
@@ -37,6 +38,7 @@ class RecommendationsPdo{
       }
       catch(PDOException $e){
         HttpResponse::send(500, null, ["error" => "Internal server error"]);
+        return [];
       }
 
 
