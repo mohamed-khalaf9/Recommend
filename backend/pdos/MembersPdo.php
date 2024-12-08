@@ -32,6 +32,12 @@ class MembersPdo{
         return [];
         }
       }
+      public function is_found($memberId):bool{
+        $sql="SELECT id FROM members WHERE id=:memberId";
+        $stm=$this->pdo->prepare($sql);
+        $stm->execute([':memberId' => $memberId]);
+        return $stm->fetchColumn()!==false;
+      }
       public function remove_member($memberId):bool{
         $sql="DELETE FROM members 
         WHERE id =:memberId";
