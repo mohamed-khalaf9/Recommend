@@ -1,6 +1,6 @@
 <?php
  include_once 'httpResponse.php';
-
+ include_once 'db.php';
 class RecommendationsPdo{
     private $pdo;
 

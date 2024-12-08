@@ -1,5 +1,5 @@
 <?php
-
+include_once 'db.php';
 class MembersPdo{
     private $pdo;
 
