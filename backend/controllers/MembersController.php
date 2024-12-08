@@ -1,5 +1,5 @@
 <?php
-
+ include_once 'pdos/MembersPdo.php';
 class MembersController{
     private $membersPdo;
 
