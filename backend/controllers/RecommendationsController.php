@@ -19,30 +19,17 @@ class RecommendationsController{
     }
 
    public  function processRequest($method,$userId,$id,$data){
-
-       if($id==null){
-        HttpResponse::send(400,null,["error"=> "circle ID is required"]);
-       }
-       else if( !($this->circleController->is_exist($id))){
-        HttpResponse::send(404,null,["error"=>"NOT FOUND ,check your circle id"]);
-       }
-       else{
-        if(!($this->memberController->is_member($userId))){
-            HttpResponse::send(403,null,["error"=>"You are not a member of this circle"]);
-        }
-        else{
-            if(count($data)>0&&$method=='POST'){
+            if($method=="POST" && isset($data) && isset($id)){
                 $this->create_recommendation($data,$userId,$id);
             }
-            elseif($method=='GET'){
+            else if($method=='GET'&& empty($data) && isset($id)){
                  $this->get_recommendations($method,$userId,$id,$data);
             }
             else{
                 $this->add_like($method,$userId,$id,$data);
             }
         }
-        }
-       }
+       
 
     
 
@@ -53,30 +40,58 @@ class RecommendationsController{
 
     }
 
-    public function create_recommendation($data,$userId,$circleId){
-        $fields=['title','brief','link','date'];
-        foreach($fields as $field){
-            if(empty($data[$field])){
-                HttpResponse::send( 400,null,["errror" =>"$field is required"]);
+    public function create_recommendation($data, $userId, $circleId) {
+        
+        if (empty($circleId)) {
+            HttpResponse::send(400, null, ["error" => "Circle ID is required."]);
+            return;
+        }
+    
+        
+        if (!$this->circleController->is_exist($circleId)) {
+            HttpResponse::send(404, null, ["error" => "Circle not found. Please check the Circle ID."]);
+            return;
+        }
+    
+        
+        if (!$this->memberController->is_member($userId, $circleId)) {
+            HttpResponse::send(403, null, ["error" => "You are not a member of this circle."]);
+            return;
+        }
+    
+       
+        $requiredFields = ['title', 'brief', 'link', 'date'];
+        foreach ($requiredFields as $field) {
+            if (empty($data[$field])) {
+                HttpResponse::send(400, null, ["error" => "$field is required."]);
                 return;
             }
         }
-       if(!(self::validate_date($data['date']))){
-            $this->recsPdo->create_recommendations($data['title'],$data['brief'],$data['link'],$data['date'],$userId,$circleId);
-            HttpResponse::send(400,null,["error" => "Date must be in (dd,mm,yyy) format"]);
+    
+       
+        if (!self::validate_date($data['date'])) {
+            HttpResponse::send(400, null, ["error" => "Date must be in (dd, mm, yyyy) format."]);
             return;
-             
-       }
-       else{
-        if($this->recsPdo->create_recommendations($data['title'],$data['brief'],$data['link'],$data['date'],$userId,$circleId)){
-            HttpResponse::send(201,null,["message" => "recommendation shared successfully"]);
         }
-        else{
-            HttpResponse::send(500,null,["error" => "Internal server error"]);
+    
+       
+        $success = $this->recsPdo->create_recommendations(
+            $data['title'],
+            $data['brief'],
+            $data['link'],
+            $data['date'],
+            $userId,
+            $circleId
+        );
+    
+        if ($success) {
+            HttpResponse::send(201, null, ["message" => "Recommendation shared successfully."]);
+        } else {
+            HttpResponse::send(500, null, ["error" => "Internal server error."]);
         }
-       }
-          
     }
+    
+
     function get_recommendations($method,$userId,$id,$data){
 
     }
