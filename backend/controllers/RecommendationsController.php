@@ -35,7 +35,7 @@ class RecommendationsController{
                 $this->create_recommendation($data,$userId,$id);
             }
             elseif($method=='GET'){
-                 $this->get_recommendations($method,$userId,$id,$data);
+                 $this->get_recommendations();
             }
             else{
                 $this->add_like($method,$userId,$id,$data);
@@ -77,9 +77,15 @@ class RecommendationsController{
        }
           
     }
-    function get_recommendations($method,$userId,$id,$data){
-
-    }
+    function get_recommendations(){
+        $recommendations=$this->recsPdo->get_recommendations();
+        if(empty($recommendations)){
+            HttpResponse::send(200,null,["error"=>"No recommendations found at the moment"]);
+        }
+        else{
+            HttpResponse::send(200,null,["recommendations "=>$recommendations]);
+      }
+}
     function add_like(){
 
     }
