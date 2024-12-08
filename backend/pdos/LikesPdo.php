@@ -9,7 +9,7 @@ class LikesPdo{
         
     }
     public function add_like($userId,$recID):bool{
-        $sql="INSERT INTO likes VALUES
+        $sql="INSERT INTO likes (userId,recId,createdAt) VALUES
         (:userId,:recId,CURDATE()git )";
         $stm=$this->pdo->prepare($sql);
         $sql2="UPDATE recommendations
