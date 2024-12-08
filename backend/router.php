@@ -21,10 +21,13 @@ class Router {
 
    
     function fetchToken($authorizationHeader) {
+        if($authorizationHeader!==null){
         if (preg_match('/Bearer\s(\S+)/', $authorizationHeader, $matches)) {
             return $matches[1]; 
         }
+    }
         return null; 
+    
     }
 
     
@@ -40,7 +43,7 @@ class Router {
   
      // Route the request to the appropriate controller
      
-    function route($method, $authorizationHeader, $resource, $id, $data) {
+    function route($method,$authorizationHeader, $resource, $id, $data) {
 
         if ($resource == "users") {
             $usersController = new UsersController();
@@ -49,7 +52,7 @@ class Router {
         else{
 
             $token = $this->fetchToken($authorizationHeader);
-            if (JwtHelper::verifyToken($token)){
+            if ($token&&JwtHelper::verifyToken($token)){
 
                 $userId = $this->fetchUserIdFromToken($token);
 
@@ -87,9 +90,11 @@ class Router {
             }
             else{
                 HttpResponse::send(401,null,["error" => "Unauthorized"]);
+                return;
             }
 
         }
+       
 
     }
     
