@@ -8,10 +8,10 @@ class MembersPdo{
         $this->pdo=$pdo;
         
     }
-    public function is_member($userId):bool{
-        $sql="SELECT userId FROM members WHERE userId=:userId";
+    public function is_member($userId,$circleId):bool{
+        $sql="SELECT userId FROM members WHERE userId=:userId AND circleId=:circleId";
         $stm=$this->pdo->prepare($sql);
-        $stm->execute([':userId' => $userId]);
+        $stm->execute([':userId' => $userId,':circleId'=>$circleId]);
         return $stm->fetchColumn()!==false;
       }
 
