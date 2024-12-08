@@ -32,6 +32,12 @@ class MembersPdo{
         return [];
         }
       }
+      public function remove_member($memberId):bool{
+        $sql="DELETE FROM members 
+        WHERE id =:memberId";
+        $stm=$this->pdo->prepare($sql);
+        return $stm->execute([':memberId'=>$memberId]);
+      }
 
 }
 
