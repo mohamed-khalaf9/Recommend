@@ -26,6 +26,12 @@ class RecommendationsPdo{
       
 
     }
+    public function is_found($rcmmndId):bool{
+      $sql="SELECT id FROM recommendations WHERE id=:rcmmndId";
+        $stm=$this->pdo->prepare($sql);
+        $stm->execute([':rcmmndId' => $rcmmndId]);
+        return $stm->fetchColumn()!==false;
+    }
     public function get_recommendations():array{
       try{
       $sql="SELECT r.id,r.title,r.brief,r.link,r.numberOfLikes,u.name FROM recommendations r INNER JOIN users u
