@@ -90,8 +90,7 @@ p{
 .btn,button,input{
     border-radius: 40px;
 }
-.btn:hover,
-button:hover{
+.btn:hover{
     transition: 0.5s ease;
 }
 a{
@@ -105,7 +104,7 @@ a:hover{
 .login-form form{
     margin: 30px 0;
 }
-.login-form input{
+.login-form .emaill,.pass{
     outline: none;
     margin-bottom: 15px;
     font-stretch: 16px;
@@ -123,7 +122,7 @@ a:hover{
     background: transparent;
     border: 1px solid #002c67;
 }
-.login-form button{
+.login-form .btn{
     font-size: 18px;
     color: #ffffff;
     background: #ff6d13;
@@ -136,7 +135,7 @@ a:hover{
 p .account a:hover{
     text-decoration: underline;
 }
-.login-form button:hover{
+.login-form .btn:hover{
     font-size: 20px;
     background: #002c67;
 }
