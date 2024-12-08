@@ -1,5 +1,5 @@
 <?php
-
+ include_once 'httpResponse.php';
 
 class RecommendationsPdo{
     private $pdo;
@@ -24,6 +24,21 @@ class RecommendationsPdo{
       ]
       );
       
+
+    }
+    public function get_recommendations():array{
+      try{
+      $sql="SELECT r,id,r.title,r.brief,r.link,r.numberOfLikes,u.name FROM recommendations R INNER JOIN users u
+      ORDER BY r.date ";
+      $stm=$this->pdo->prepare($sql);
+      $stm->execute();
+      $recommendations=$stm->fetchAll(PDO::FETCH_ASSOC);
+      return $recommendations;
+      }
+      catch(PDOException $e){
+        HttpResponse::send(500, null, ["error" => "Internal server error"]);
+      }
+
 
     }
 
