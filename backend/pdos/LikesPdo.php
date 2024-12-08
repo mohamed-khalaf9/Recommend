@@ -8,21 +8,25 @@ class LikesPdo{
         $this->pdo=$pdo;
         
     }
-    public function add_like($userId,$recID):bool{
+    public function add_like( $userId, $recID):bool{
+        $recID = (int)$recID;
         $sql="INSERT INTO likes (userId,recId,createdAt) VALUES
-        (:userId,:recId,CURDATE()git )";
+        (:userId,:recId,CURDATE())";
         $stm=$this->pdo->prepare($sql);
+        if (!($stm->execute([':userId' => $userId, ':recId' => $recID]))) {
+            HttpResponse::send(500, null, ["error" => "Failed to insert like"]);
+            return false;
+        }
         $sql2="UPDATE recommendations
         SET numberOfLikes=numberOfLikes+1
         WHERE id=:recId";
         $stm2=$this->pdo->prepare($sql2);
-        $stm2->execute([':recId'=>$recID]);
-       return $stm->execute([
-            ':userId' =>$userId,
-            ':recId' =>$recID
-        ]
-        )
-        ;
+       if(!($stm2->execute([':recId'=>$recID]))){
+        HttpResponse::send(500, null, ["error" => "Failed to insert like"]);
+            return false;
+       }
+
+       return true;
     }
 
 
