@@ -1,5 +1,6 @@
 <?php
 include_once 'db.php';
+include_once'pdos/RequestsPdo.php';
 include_once 'CirclesController.php';
 include_once 'MembersController.php';
 class RequestsController{
