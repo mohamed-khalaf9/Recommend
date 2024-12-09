@@ -8,6 +8,13 @@ class LikesPdo{
         $this->pdo=$pdo;
         
     }
+    public function is_liked($recID):bool{
+        $sql="SELECT COUNT(*) FROM likes WHERE recId=:recId";
+        $stm=$this->pdo->prepare($sql);
+        $stm->execute(['recId'=>$recID]);
+        $numOfLikes= $stm->fetchColumn();
+        return $numOfLikes>0;
+    }
     public function add_like( $userId, $recID):bool{
         $recID = (int)$recID;
         $sql="INSERT INTO likes (userId,recId,createdAt) VALUES
