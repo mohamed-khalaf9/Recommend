@@ -12,7 +12,7 @@ class RequestsPdo{
     }
     public function get_pending_requests($circleId):array{
         try{
-          $sql="SELECT r.id,r.userId,u.name,u.education,u.description,u.createdAt FROM requests r INNER JOIN users u
+          $sql="SELECT r.id,r.userId,u.name,u.education,u.brief,u.createdAt FROM requests r INNER JOIN users u
           ON u.id=r.userId ";
           $stm=$this->pdo->prepare($sql);
           $stm->execute();
