@@ -39,7 +39,7 @@ class MembersPdo{
         
         catch(PDOException $e){
             HttpResponse::send(500, null, ["error" => "Internal server error"]);
-        return [];
+            exit;
         }
       }
       public function is_found($memberId):bool{
