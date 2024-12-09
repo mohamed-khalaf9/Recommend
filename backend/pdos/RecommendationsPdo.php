@@ -10,7 +10,9 @@ class RecommendationsPdo{
         
     }
     
-    public function create_recommendations(string $title ,string $description,string $link,string $date,int $userId,int $circleId):bool{
+    public function create_recommendations(string $title ,string $description,string $link,string $date, $userId,$circleId):bool{
+      $userId=(int)$userId;
+      $circleId=(int)$circleId;
       $sql="INSERT INTO recommendations (title,description,link,userId,circleId,createdAt)VALUES
       (:title, :description, :link,  :userId, :circleId, :createdAt)";
       $stm=$this->pdo->prepare($sql);
@@ -34,7 +36,7 @@ class RecommendationsPdo{
     }
     public function get_recommendations():array{
       try{
-      $sql="SELECT r.id,r.title,r.brief,r.link,r.numberOfLikes,u.name FROM recommendations r INNER JOIN users u
+      $sql="SELECT r.id,r.title,r.description,r.link,r.numberOfLikes,u.name FROM recommendations r INNER JOIN users u
       ON r.userId = u.id
       ORDER BY r.createdAt ";
       $stm=$this->pdo->prepare($sql);
