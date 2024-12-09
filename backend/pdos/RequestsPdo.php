@@ -36,6 +36,7 @@ class RequestsPdo{
          return $stm->fetchColumn();
     }
         public function approve_request($requestId):bool{
+            $requestId=(int)$requestId;
                  $sql="UPDATE requests 
                  SET status =:val
                  WHERE id=:requestId";
