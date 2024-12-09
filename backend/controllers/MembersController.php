@@ -15,7 +15,9 @@ class MembersController{
     public function is_member($userId,$circleId):bool{
           return $this->membersPdo->is_member($userId,$circleId);
     }
-    
+     public function get_member_role($memberId):string{
+         return $this->membersPdo->get_member_role($memberId);
+     }
     
     function processRequest($method,$userId,$id,$data){
 
