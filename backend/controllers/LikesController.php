@@ -43,6 +43,7 @@ class LikesController{
         }
         if($this->likesPdo->is_liked($recID)){
             HttpResponse::send(400, null, ["message" => "This recommendation is already liked before "]);
+            return;
         }
         $success=$this->likesPdo->add_like($userId,$recID);
           if($success){
