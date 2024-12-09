@@ -34,12 +34,15 @@ class LikesController{
 
     public function add_like( $userId, $recID){
         if(empty($recID)){
-            HttpResponse::send(400, null, ["error" => "Recommendation ID is required."]);
+            HttpResponse::send(400, null, ["message" => "Recommendation ID is required."]);
             return;
         }
         if(!$this->recController->is_found($recID)){
             HttpResponse::send(404,null,["error"=>"Not found"]);
             return;
+        }
+        if($this->likesPdo->is_liked($recID)){
+            HttpResponse::send(400, null, ["message" => "This recommendation is already liked before "]);
         }
         $success=$this->likesPdo->add_like($userId,$recID);
           if($success){
