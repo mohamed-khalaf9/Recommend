@@ -14,6 +14,16 @@ class MembersPdo{
         $stm->execute([':userId' => $userId,':circleId'=>$circleId]);
         return $stm->fetchColumn()!==false;
       }
+      public function get_member_role($userId):string{
+          $sql="SELECT m.role FROM members m WHERE m.id=:userId ";
+          $stm=$this->pdo->prepare($sql);
+          $stm->execute([':userId'=>$userId]);
+          $role=$stm->fetch(PDO::FETCH_ASSOC);
+          if($role==null)
+          return '';
+        else
+          return $role;
+      }
 
       public function get_cirle_members():array{
         try{
