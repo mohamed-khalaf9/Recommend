@@ -24,6 +24,9 @@ class RequestsController{
               if($data['status']=='approved'){
                   $this->approve_request($id);
               }
+              if($data['status']=='rejected'){
+                $this->reject_request($id);
+              }
           }
     }
 
@@ -72,6 +75,28 @@ class RequestsController{
          }
 
     }
+    public function reject_request($requestId){
+        if(! $this->is_found($requestId)){
+           HttpResponse::send(404,null,["message"=>"Not found ,check request id"]);
+         return;
+        }
+        if($this->get_status($requestId)=='Approved'){
+           HttpResponse::send(409,null,["message"=>"This request is already approved"]);
+           return;
+        }
+        if($this->get_status($requestId)=='Rejected'){
+           HttpResponse::send(409,null,["message"=>"This request is already Rejected"]);
+           return;
+        }
+        $success=$this->reqsPdo->reject_request($requestId);
+        if($success){
+           HttpResponse::send(201,null,["message"=> "request accepted and member added successfully to the circle"]);
+        }
+        else{
+           HttpResponse::send(500,null,["error" => "Internal server error"]);
+        }
+
+   }
 
 
 
