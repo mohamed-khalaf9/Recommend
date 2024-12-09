@@ -10,13 +10,16 @@ body {
     height: 100vh;
     margin: 0;
 }
-
+/* .fa-house{
+    margin-bottom: 650px;
+    margin-left: 200px;
+} */
 .mycircles {
     background-color: white;
     border-radius: 10px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     padding: 20px;
-    width: 300px;
+    width: 400px;
     text-align: center;
 }
 
@@ -40,11 +43,5 @@ button {
 }
 
 button:hover {
-    background-color: #0056b3;
-}
-
-i {
-    font-size: 20px;
-    margin: 10px 0;
-    color: orange;
+    background-color: #ff6d13;
 }
