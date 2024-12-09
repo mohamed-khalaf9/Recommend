@@ -47,6 +47,19 @@ class RequestsPdo{
                  ]);
 
     }
+    public function reject_request($requestId):bool{
+        $requestId=(int)$requestId;
+             $sql="UPDATE requests 
+             SET status =:val
+             WHERE id=:requestId";
+             $stm=$this->pdo->prepare($sql);
+             return $stm->execute([
+                ':val'=>'Rejected',
+                ':requestId'=>$requestId
+             ]);
+
+}
+    
         
     }
 
