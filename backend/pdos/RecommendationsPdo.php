@@ -44,7 +44,7 @@ class RecommendationsPdo{
       }
       catch(PDOException $e){
         HttpResponse::send(500, null, ["error" => "Internal server error"]);
-        return [];
+        exit;
       }
 
 
