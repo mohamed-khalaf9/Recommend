@@ -15,10 +15,10 @@ class MembersPdo{
         return $stm->fetchColumn()!==false;
       }
       public function get_member_role($userId):string{
-          $sql="SELECT m.role FROM members m WHERE m.id=:userId ";
+          $sql="SELECT m.role FROM members m WHERE m.userId=:userId ";
           $stm=$this->pdo->prepare($sql);
           $stm->execute([':userId'=>$userId]);
-          $role=$stm->fetch(PDO::FETCH_ASSOC);
+          $role=$stm->fetchColumn();
           if($role==null)
           return '';
         else
