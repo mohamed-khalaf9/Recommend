@@ -23,7 +23,7 @@ class RequestsPdo{
             exit;
         }
     }
-    public function is_found($requestId){
+    public function is_found($requestId):bool{
         $sql="SELECT id FROM requests WHERE id=:requestId";
         $stm=$this->pdo->prepare($sql);
         $stm->execute([':requestId' => $requestId]);
