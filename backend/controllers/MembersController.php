@@ -22,6 +22,9 @@ class MembersController{
             if($method=="GET"&&empty($data)&&isset($id)){
                 $this->get_circle_members($id);
             }
+            if($method=="DELETE"&&empty($data)&&isset($id)){
+                $this->remove_member($id);
+            }
          }
 
         public function get_circle_members($circleId){
@@ -43,7 +46,30 @@ class MembersController{
             else{
                 HttpResponse::send(200,null,["members "=>$members]);
             }
-        }        }    
+        }
+
+        public function is_found($memberId):bool{
+            return $this->membersPdo->is_found($memberId);
+        }
+       public function remove_member($memberId){
+           if (empty($memberId)){
+            HttpResponse::send(400, null, ["error" => "Member ID is required."]);
+                return;
+           }
+           if(! $this->is_found($memberId)){
+            HttpResponse::send(404, null, ["error" => "Member is not found. Please check the Member ID."]);
+                return;
+           }
+           $success=$this->membersPdo->remove_member($memberId);
+           if($success){
+            HttpResponse::send(201,null,["message"=>"member removed successfully!"]);
+           }
+           else{
+            HttpResponse::send(500,null,["error" => "Internal server error"]);
+           }
+       }
+    
+    }    
    
 
 
