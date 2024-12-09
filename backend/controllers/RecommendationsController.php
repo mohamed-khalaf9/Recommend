@@ -97,9 +97,9 @@ class RecommendationsController{
             HttpResponse::send(403, null, ["error" => "You are not a member of this circle."]);
             return;
         }
-        $recommendations=$this->recsPdo->get_recommendations();
+        $recommendations=$this->recsPdo->get_recommendations($circleId);
         if(empty($recommendations)){
-            HttpResponse::send(404,null,["error"=>"No recommendations found at the moment"]);
+            HttpResponse::send(404,null,["message"=>"There are no recommendations available at this time."]);
         }
         else{
             HttpResponse::send(200,null,["recommendations "=>$recommendations]);
