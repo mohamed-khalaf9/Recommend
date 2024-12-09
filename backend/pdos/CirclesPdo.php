@@ -14,7 +14,7 @@ class CirclesPdo{
         $stm->execute([':circleId'=>$circleId]);
         return $stm->fetchColumn()!==false;
     }
-    public function delete_circle($circleId){
+    public function delete_circle($circleId):bool{
         $circleId=(int)$circleId;
           $sql="DELETE FROM circles
           WHERE id=:circleId";
