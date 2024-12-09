@@ -25,7 +25,7 @@ class LikesPdo{
             return false;
         }
         $sql2="UPDATE recommendations
-        SET numberOfLikes=numberOfLikes+1
+        SET numberOfLikes=COALESCE(numberOfLikes, 0)+1
         WHERE id=:recId";
         $stm2=$this->pdo->prepare($sql2);
        if(!($stm2->execute([':recId'=>$recID]))){
