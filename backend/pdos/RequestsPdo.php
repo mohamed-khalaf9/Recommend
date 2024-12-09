@@ -29,6 +29,12 @@ class RequestsPdo{
         $stm->execute([':requestId' => $requestId]);
         return $stm->fetchColumn()!==false;
     }
+    public function get_status($requestId):string{
+        $sql="SELECT status FROM requests WHERE id=:requestId";
+        $stm=$this->pdo->prepare($sql);
+         $stm->execute([':requestId' => $requestId]);
+         return $stm->fetchColumn();
+    }
         public function approve_request($requestId):bool{
             
                  $sql="UPDATE requests 
