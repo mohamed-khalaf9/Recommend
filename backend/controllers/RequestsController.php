@@ -22,7 +22,7 @@ class RequestsController{
           }
           if($method=="PUT"&&isset($userId)&&isset($id)&&isset($data)){
               if($data['status']=='approved'){
-                  $this->approve_request($id);
+                  $this->approve_request($id,$userId);
               }
           }
     }
@@ -50,9 +50,13 @@ class RequestsController{
     public function get_status($requestId):string{
          return $this->reqsPdo->get_status($requestId);
     }
-    public function approve_request($requestId){
+    public function approve_request($requestId,$userId){
          if(! $this->is_found($requestId)){
             HttpResponse::send(404,null,["message"=>"Not found ,check request id"]);
+          return;
+         }
+         if($this->memberController->get_member_role($userId)!='Admin'){
+            HttpResponse::send(404,null,["message"=>"You are not allowed,you are not the admin"]);
           return;
          }
          if($this->get_status($requestId)=='Approved'){
