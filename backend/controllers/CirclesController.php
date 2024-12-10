@@ -2,35 +2,62 @@
 
 include_once 'pdos/CirclesPdo.php';
 include_once 'controllers/MembersController.php';
+
+
 class CirclesController{
     private $circlesPdo;
-
+    private $memberController;
     function __construct()
     {
         $db = new Database();
         $pdo = $db->getConnection();
         $this->circlesPdo = new CirclesPdo($pdo);
+        $this->memberController= new MembersController();
     }
       public function is_exist($circleId):bool{
           return $this->circlesPdo->is_exist($circleId);
       }
     function processRequest($method,$userId,$id,$data){
-        if($method=="POST" && empty($id))
-        {
+         if($method=="DELETE"&&empty($data)&&isset($userId)&&isset($id)){
+            $this->delete_circle($id,$userId);
+          }
+         else if($method=="POST" && empty($id))
+           {
             if(count($data)==3)
             {
                 $this->createCircle($data,$userId);
             }
 
-        }
-        else if($method == "GET" && empty($id) && empty($data))
-        {
+            }
+         else if($method == "GET" && empty($id) && empty($data))
+            {
             $this->getUserCircles($userId);
+   
+            }
+      
+    }
 
-        }
+    public function delete_circle($circleId,$userId){
+       if(!$this->circlesPdo->is_exist($circleId)){
+        HttpResponse::send(404,null,["error"=>"Not found,Check circle id"]);
+        return;
+       }
+       if($this->memberController->get_member_role($userId)!='Admin'){
+        HttpResponse::send(404,null,["error"=>"You are not allowed,you are not the admin"]);
+        return;
+       }
+       $success=$this->circlesPdo->delete_circle($circleId);
+       if($success){
+        HttpResponse::send(202,null,["message"=>"circle deleted successfully"]);
+       }
+       else{
+        HttpResponse::send(500,null,["error"=>"Internal server error"]);
+       }
+    }
+       
        
 
-    }
+    
 
     function createCircle($data,$userId)
     {
@@ -121,6 +148,7 @@ function getUserCircles($userId)
    
 
     
+
 
 
 
