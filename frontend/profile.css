@@ -1,0 +1,83 @@
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=Fira+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+body {
+    font-family: "Anton", sans-serif;
+    background-color: #f5f5f5;
+    margin: 0;
+    padding: 20px;
+}
+
+.nav {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.nav h1 {
+    margin-right: 1300px;
+    color: #ff6d13;
+}
+
+.nav i {
+    font-size: 24px;
+    color:#002c67;
+}
+.nav i:hover{
+    color: #ff6d13;
+}
+.table {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+}
+
+table {
+    width: 90%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+tr:hover {
+    background-color: #d6d6d6;
+}
+
+td {
+    color: #002c67;
+}
+
+.table i {
+    text-decoration: none;
+    color: #ff6d13;
+    font-size: 35px;
+    display: block;
+    margin-bottom: 20px;
+}
+
+.table i:hover {
+    color: #002c67;
+}
+p{
+    text-align: center;
+    color: #ff6d13;
+    margin-top: 80px;
+}
+
+/* table {
+   border: 1px solid #130771;
+    width: 100%;
+    text-align: left;
+  }
+  
+  th, td {
+    text-align: left;
+    padding: 8px;
+  }
+  
+  tr:nth-child(even) {background-color: #f2f2f2;}
+  tr:hover {background-color: coral;} */

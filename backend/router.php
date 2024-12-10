@@ -42,18 +42,17 @@ class Router {
 
   
      // Route the request to the appropriate controller
-     
-    function route($method,$authorizationHeader, $resource, $id, $data) {
+    function route($method, $authorizationHeader, $resource, $id, $data) {
+        $token = $this->fetchToken($authorizationHeader);
+        $userId = $this->fetchUserIdFromToken($token);
+
 
         if ($resource == "users") {
             $usersController = new UsersController();
-            $usersController->processRequest($method,$data);
+            $usersController->processRequest($method,$userId,$data);
         }
         else{
-
-            $token = $this->fetchToken($authorizationHeader);
             if ($token&&JwtHelper::verifyToken($token)){
-
                 $userId = $this->fetchUserIdFromToken($token);
 
                 if ($resource == "circles") {

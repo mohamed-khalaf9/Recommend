@@ -26,25 +26,37 @@ class RecommendationsPdo{
       
 
     }
+  
     public function is_found($rcmmndId):bool{
       $sql="SELECT id FROM recommendations WHERE id=:rcmmndId";
         $stm=$this->pdo->prepare($sql);
         $stm->execute([':rcmmndId' => $rcmmndId]);
         return $stm->fetchColumn()!==false;
     }
-    public function get_recommendations():array{
+  
+    public function get_recommendations($circleId):array{
       try{
-      $sql="SELECT r.id,r.title,r.brief,r.link,r.numberOfLikes,u.name FROM recommendations r INNER JOIN users u
-      ON r.userId = u.id
-      ORDER BY r.createdAt ";
+      $sql="SELECT r.id,r.title,r.description,r.link,r.numberOfLikes,u.name FROM recommendations r INNER JOIN users u
+      ON r.userId =u.id AND r.circleId= :circleId
+      ORDER BY r.numberOfLikes DESC,r.createdAt DESC";
       $stm=$this->pdo->prepare($sql);
-      $stm->execute();
+      $stm->execute([':circleId'=>$circleId]);
       $recommendations=$stm->fetchAll(PDO::FETCH_ASSOC);
-      return $recommendations;
+      $formatedRecommendations=array_map(function($recommendation){
+                return[
+                  "id"=>$recommendation['id'],
+                 "title"=>$recommendation['title'],
+                 "desc"=>$recommendation['description'] ,
+                 "link"=>$recommendation['link'],
+                 "numberOfLikes"=>$recommendation['numberOfLikes'],
+                   "username"=>$recommendation['name']
+                ];
+      },$recommendations);
+      return $formatedRecommendations;
       }
       catch(PDOException $e){
         HttpResponse::send(500, null, ["error" => "Internal server error"]);
-        return [];
+        exit;
       }
 
 
