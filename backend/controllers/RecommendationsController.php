@@ -102,7 +102,7 @@ class RecommendationsController{
             HttpResponse::send(404,null,["message"=>"There are no recommendations available at this time."]);
         }
         else{
-            HttpResponse::send(200,null,["recommendations "=>$recommendations]);
+            HttpResponse::send(200,null,$recommendations);
       }
 }
     
