@@ -41,6 +41,22 @@ class UsersPdo{
         return $stmt->fetch(PDO::FETCH_ASSOC); 
     }
 
+    public function getUserProfile(int $userId): ?array {
+        $query = "
+            SELECT id, name, email, education, brief, createdAt 
+            FROM users 
+            WHERE id = :userId
+        ";
+
+        $stmt = $this->pdo->prepare($query);
+        $stmt->bindParam(':userId', $userId, PDO::PARAM_INT);
+        $stmt->execute();
+
+        $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        return $user ?: null;
+    }
+
 
  
 

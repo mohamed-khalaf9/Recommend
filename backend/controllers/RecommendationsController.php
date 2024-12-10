@@ -19,19 +19,23 @@ class RecommendationsController{
     }
 
    public  function processRequest($method,$userId,$id,$data){
-
             if($method=='POST'&&isset($userId)&&isset($id)){
                 $this->create_recommendation($data,$userId,$id);
             }
             elseif($method=='GET'&&empty($data)&&isset($id)){
                  $this->get_recommendations($userId,$id);
+
+            if($method=="POST" && isset($data) && isset($id)){
+                $this->create_recommendation($data,$userId,$id);
+            }
+            else if($method=='GET'&& empty($data) && isset($id)){
+                 $this->get_recommendations($method,$userId,$id,$data);
+
             }
             else{
                 HttpResponse::send(404,null,["error"=>"Not found"]);
             }
         }
-    
-
     
 
     private function validate_date($date):bool{
@@ -41,19 +45,18 @@ class RecommendationsController{
 
     }
 
-    public function create_recommendation($data,$userId,$circleId){
+
+    public function create_recommendation($data, $userId, $circleId) {
+      
         if (empty($circleId)) {
             HttpResponse::send(400, null, ["error" => "Circle ID is required."]);
             return;
         }
 
-
         if (!$this->circleController->is_exist($circleId)) {
             HttpResponse::send(404, null, ["error" => "Circle not found. Please check the Circle ID."]);
             return;
         }
-
-
         if (!$this->memberController->is_member($userId, $circleId)) {
             HttpResponse::send(403, null, ["error" => "You are not a member of this circle."]);
             return;
@@ -80,13 +83,13 @@ class RecommendationsController{
        }
           
     }
-    function get_recommendations($userId,$circleId){
-        if (empty($circleId)) {
-            HttpResponse::send(400, null, ["error" => "Circle ID is required."]);
-            return;
-        }
+     
+     
+   
+        
+    
 
-
+    function get_recommendations($method,$userId,$id,$data){
         if (!$this->circleController->is_exist($circleId)) {
             HttpResponse::send(404, null, ["error" => "Circle not found. Please check the Circle ID."]);
             return;
