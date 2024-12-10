@@ -42,7 +42,17 @@ class RecommendationsPdo{
       $stm=$this->pdo->prepare($sql);
       $stm->execute([':circleId'=>$circleId]);
       $recommendations=$stm->fetchAll(PDO::FETCH_ASSOC);
-      return $recommendations;
+      $formatedRecommendations=array_map(function($recommendation){
+                return[
+                  "id"=>$recommendation['id'],
+                 "title"=>$recommendation['title'],
+                 "desc"=>$recommendation['description'] ,
+                 "link"=>$recommendation['link'],
+                 "numberOfLikes"=>$recommendation['numberOfLikes'],
+                   "username"=>$recommendation['name']
+                ];
+      },$recommendations);
+      return $formatedRecommendations;
       }
       catch(PDOException $e){
         HttpResponse::send(500, null, ["error" => "Internal server error"]);
