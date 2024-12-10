@@ -1,5 +1,5 @@
 <?php
-
+include_once 'db.php';
 class MembersPdo{
     private $pdo;
 
@@ -8,6 +8,8 @@ class MembersPdo{
         $this->pdo=$pdo;
         
     }
+
+  
   public function is_member($userId, $circleId): bool {
     $sql = "SELECT userId 
             FROM members 
