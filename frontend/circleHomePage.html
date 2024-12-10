@@ -15,7 +15,7 @@
     />
   </head>
   <body>
-    <div class="container">
+    <div class="container" id="aa">
       <div class="header">
         <div class="logo">
           <img src=".\\media\\ui project dr.moheb1.png" alt="Logo" />
@@ -33,7 +33,7 @@
       </div>
       <div class="meddle" id="mid">
         <div class="recoms">
-          <div class="content">
+          <div class="content" >
             <h1>Someone</h1>
             <p class="desc">
               This recommendation about: Lorem ipsum dolor, sit amet consectetur
@@ -41,22 +41,19 @@
               perspiciatis ullam nam quod reprehenderit earum. Possimus alias
               atque a, iusto molestias voluptatum suscipit corporis sed quaerat?
             </p>
-            <span class="share">
             <button class="link"><i class="fa-solid fa-link"></i></button>
-            </span>
-            <hr />
-            <div class="likes">
-              <button class="like">
-                <i class="fa-regular fa-thumbs-up"></i>
-              </button>
-              <p class="counter">12</p>
-            </div>
+            <button class="like">
+              <i class="fa-regular fa-thumbs-up"></i>
+            </button>
+            <p class="counter">12</p>
           </div>
         </div>
       </div>
       <div class="footer">
         <div class="left">
-          <button class="admin"><i class="fa-solid fa-crown"></i> Dashboard</button>
+          <button class="admin">
+            <i class="fa-solid fa-crown"></i> Dashboard
+          </button>
         </div>
         <div class="right">
           <button class="add" id="add"><i class="fa-solid fa-plus"></i></button>
@@ -64,24 +61,42 @@
       </div>
     </div>
     <div class="create" id="create">
-    <div class="popup-content">
-      <h1>Create your recommendation</h1>
-      <form action="" name="addRecommendation">
-        <label for="title">Title:</label>
-        <input type="text" name="title" id="title" placeholder="Enter title" required>
-        <br>
-        <label for="brief">Brief:</label>
-        <input type="text" name="brief" id="brief" placeholder="Enter brief" required>
-        <br>
-        <label for="link">Link:</label>
-        <input type="text" name="link" id="link" placeholder="Enter link" required>
-        <br>
-        <button class="share2">
-          <i class="fa-solid fa-share"></i> Share
-        </button>
-      </form>
+      <div class="popup-content">
+        <h1>Create your recommendation</h1>
+        <form action="" name="addRecommendation">
+          <label for="title">Title:</label>
+          <input
+            type="text"
+            name="title"
+            id="title"
+            placeholder="Enter title"
+            required
+          />
+          <br />
+          <label for="brief">Brief:</label>
+          <input
+            type="text"
+            name="brief"
+            id="brief"
+            placeholder="Enter brief"
+            required
+          />
+          <br />
+          <label for="link">Link:</label>
+          <input
+            type="text"
+            name="link"
+            id="link"
+            placeholder="Enter link"
+            required
+          />
+          <br />
+          <button class="share2">
+            <i class="fa-solid fa-share"></i> Share
+          </button>
+        </form>
+      </div>
     </div>
-  </div>
     <script src="circleHomePage.js"></script>
   </body>
 </html>
