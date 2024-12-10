@@ -10,8 +10,6 @@ class RecommendationsPdo{
         
     }
     
-
-
     public function create_recommendations(string $title ,string $description,string $link,string $date,int $userId,int $circleId):bool{
       $sql="INSERT INTO recommendations (title,description,link,userId,circleId,createdAt)VALUES
       (:title, :description, :link,  :userId, :circleId, :createdAt)";
