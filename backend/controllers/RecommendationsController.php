@@ -72,10 +72,6 @@ class RecommendationsController {
         }
     }
 
-    public function is_found($rcmmndId): bool {
-        return $this->recsPdo->is_found($rcmmndId);
-    }
-
     public function get_recommendations($userId, $circleId) {
         if (empty($circleId)) {
             HttpResponse::send(400, null, ["error" => "Circle ID is required."]);
@@ -100,3 +96,4 @@ class RecommendationsController {
         }
     }
 }
+

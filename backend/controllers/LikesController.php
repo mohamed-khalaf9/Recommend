@@ -2,76 +2,46 @@
 
 include_once 'pdos/LikesPdo.php';
 include_once 'RecommendationsController.php';
-//include_once 'MembersController.php';
-//include_once 'CirclesController.php';
-class LikesController{
+
+class LikesController {
     private $likesPdo;
-    //private $circleController;
-    //private $memberController;
     private $recController;
-    function __construct()
-    {
-        $db = new Database();
-        $pdo = $db->getConnection();
-        $this->likesPdo = new LikesPdo($pdo);
-        //$this->circleController=new CirclesController();
-        //$this->memberController=new MembersController();
-        $this->recController=new RecommendationsController();
-    }
-    
-    function processRequest($method,$userId,$id,$data){
-        
-          
-        if($method=="POST"&&isset($id)&&empty($data)){
-             $this->add_like($userId,$id);
-        }
-        else{
-            HttpResponse::send(404,null,["error"=>"Not found"]);
-        }
-}
-    
-    
 
-    public function add_like( $userId, $recID){
-        if(empty($recID)){
-            HttpResponse::send(400, null, ["message" => "Recommendation ID is required."]);
-            return;
-        }
-        if(!$this->recController->is_found($recID)){
-            HttpResponse::send(404,null,["error"=>"Not found"]);
-            return;
-        }
-        if($this->likesPdo->is_liked($recID)){
-            HttpResponse::send(400, null, ["message" => "This recommendation is already liked before "]);
-            return;
-        }
-        $success=$this->likesPdo->add_like($userId,$recID);
-          if($success){
-            HttpResponse::send(201,null,["message"=>"you liked this recommendation"]);
-          }
-          else{
-            HttpResponse::send(500,null,["error"=>"Internal server error"]);
-          }
-
+    public function __construct($likesPdo, $recController) {
+        $this->likesPdo = $likesPdo;
+        $this->recController = $recController;
     }
 
+    public function processRequest($method, $userId, $id, $data) {
+        if ($method === "POST" && isset($id) && empty($data)) {
+            $this->addLike($userId, $id);
+        } else {
+            HttpResponse::send(404, null, ["error" => "Not found"]);
+        }
+    }
 
+    private function addLike($userId, $recID) {
+        if (empty($recID)) {
+            HttpResponse::send(400, null, ["error" => "Recommendation ID is required."]);
+            return;
+        }
 
+        if (!$this->recController->is_found($recID)) {
+            HttpResponse::send(404, null, ["error" => "Recommendation not found."]);
+            return;
+        }
 
+        if ($this->likesPdo->is_liked($recID, $userId)) {
+            HttpResponse::send(400, null, ["error" => "This recommendation is already liked."]);
+            return;
+        }
+
+        $success = $this->likesPdo->add_like($userId, $recID);
+
+        if ($success) {
+            HttpResponse::send(201, null, ["message" => "You liked this recommendation."]);
+        } else {
+            HttpResponse::send(500, null, ["error" => "Internal server error."]);
+        }
+    }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-?>
