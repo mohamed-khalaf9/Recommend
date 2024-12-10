@@ -1,0 +1,111 @@
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=Fira+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+/*دا خط العناوين الكبيرة 
+
+font-family: "Anton", sans-serif;
+font-size: 2.5rem;
+دا خط السطور الصغيرة
+
+font-family: "Fira Sans", sans-serif;
+font-size: 1.5rem;
+
+#ff6d13   orange
+
+#002c67 blue
+
+#ffd1b5     creamy*/
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body{
+    overflow:hidden;
+}
+.nav{
+display:flex;
+justify-content: space-between;
+align-items: center;
+padding: 10px 20px;
+}
+img{
+    height: 100px;
+    width: 200px;
+    font-size: 30px;
+}
+#home-icon{
+   font-size: 25px;
+}
+.fa-user{
+    position: relative;
+    top:150px;
+    left: 275px;
+   font-size: 100px;
+   color: #ff6d13;
+}
+#new-acc{
+    font-family: "Anton", sans-serif;
+    font-size: 2.5rem;
+    font-weight: 900;
+    color: #ff6d13;
+    position: relative;
+    left:125px;
+    top:175px;
+    letter-spacing: 2px;
+}
+
+form{
+    position: fixed;
+    left: 850px;
+    top:150px;
+    border: 5px solid #ffe7d8;
+    border-radius: 20px;
+    background-color: #fcf3ee;
+    width: 450px;
+    height: 490px;
+}
+.data{
+    width: 99%;
+    height: 30px;
+    border:1px solid #ebc7b0;
+    border-radius: 20px ;
+    color: #002c67;
+}
+input:hover{
+    background-color: #ebc7b0;
+}
+label{
+    font-family: "Fira Sans", sans-serif;
+font-size: 1.5rem;
+font-weight: 500;
+color: #002c67;
+font-size: 15px;
+}
+div{
+    margin: 20px;
+}
+#sign-up{
+    width: 50%;
+    height: 30px;
+    border-radius: 20px;
+    border-color:white ;
+    color: white;
+    background:#ff6d13;
+    margin-left: 95px;
+}
+#sign-up:hover{
+    font-size: larger;
+    background: #002c67;
+}
+#pForm{
+    margin-left: 85px;
+    font-family: "Fira Sans", sans-serif;
+font-size: 1.5rem;
+color: #002c67;
+font-size: 15px;
+margin-top: 20px;
+margin-left: 120px;
+}
+a{
+    text-decoration-line: none;
+}

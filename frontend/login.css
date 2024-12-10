@@ -1,0 +1,141 @@
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=Fira+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+*{
+	padding: 0;
+	margin: 0;
+	box-sizing: border-box;
+}
+
+body{
+    font-family: "Fira Sans", sans-serif;
+    overflow: hidden;
+}
+.nav{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+}
+.nav img{
+    height: 100px;
+}
+.nav i{
+    height: 50px;
+    color: #002c67;
+}
+.login-form{
+    position: relative;
+    min-height: 100vh;
+    z-index: 0;
+    background: #ffffff;
+    padding: 40px;
+    justify-content: center;
+    display: grid;
+    grid-template-rows: 1fr auto 1fr;
+    align-items:center ;
+}
+.container{
+    max-width: 1400px;
+    margin: 0 auto;
+}
+.login-form h1{
+    font-family: "Anton", sans-serif;
+font-size: 2.5rem;
+text-align: center;
+color: #ff6d13;
+}
+.login-form h2{
+    line-height: 40px;
+    margin-bottom: 5px;
+    font-size: 30px;
+    font-weight: 500;
+    color: #002c67;
+    text-align: center;
+}
+.login-form .main{
+    position: relative;
+    display: flex;
+    margin: 30px 0;
+}
+.content{
+    flex-basis: 50%;
+    padding: 3em 3em;
+    background: #ffffff;
+    box-shadow: 2px 9px 49px -17px rgba(0, 0, 0, 0.3);
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+}
+.form-img{
+    flex-basis: 50%;
+    background: #ffd1b5;
+    background-size: cover;
+    padding: 40px;
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+    align-items: center;
+    display: grid;
+}
+.form-img img{
+    max-width: 100%;
+}
+p{
+    color: rgb(88, 88, 88);
+    font-size: 16px;
+    line-height: 25px;
+    opacity: 0.6;
+    text-align: center;
+
+}
+.btn,button,input{
+    border-radius: 40px;
+}
+.btn:hover{
+    transition: 0.5s ease;
+}
+a{
+    text-decoration: none;
+    color: #002c67;
+    transition: 0.3s ease
+}
+a:hover{
+    font-size: 18j0upx;
+}
+.login-form form{
+    margin: 30px 0;
+}
+.login-form .emaill,.pass{
+    outline: none;
+    margin-bottom: 15px;
+    font-stretch: 16px;
+    color: #002c67;
+    text-align: left;
+    padding: 14px 20px;
+    width: 100%;
+    display: inline-block;
+    box-sizing: border-box;
+    border: none;
+    background: #fae4d6;
+    transition: 0.3s ease;
+}
+.login-form input:focus{
+    background: transparent;
+    border: 1px solid #002c67;
+}
+.login-form .btn{
+    font-size: 18px;
+    color: #ffffff;
+    background: #ff6d13;
+    width: 100%;
+    border: none;
+    padding: 14px 15px;
+    font-weight: 600;
+    transition: 0.3s ease;
+}
+p .account a:hover{
+    text-decoration: underline;
+}
+.login-form .btn:hover{
+    font-size: 20px;
+    background: #002c67;
+}
