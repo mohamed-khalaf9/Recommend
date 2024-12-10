@@ -7,7 +7,7 @@ var object = {
   likesnum: 125,
 };
 for (let i = 0; i < 10; i++) {
-  txt += `<div class="recoms" id="${object.id}" ><div class="content"><h1>Someone</h1><p class="desc">This recommendation about: ${object.desc}</p><button class="link" ><i class="fa-solid fa-link"></i></button> <button class="like"> <i class="fa-regular fa-thumbs-up"></i></button><p class="counter">${object.likesnum}</p></div></div>`;
+  txt += `<div class="recoms" id="${object.id}" ><div class="content"><h1>Someone</h1><p class="desc">This recommendation about: ${object.desc}</p><button class="like"> <i class="fa-regular fa-thumbs-up"></i></button><p class="counter">${object.likesnum}</p><button class="link" ><i class="fa-solid fa-link"></i></button></div></div>`;
   txt += "<br/>";
 }
 rec.innerHTML = txt;
