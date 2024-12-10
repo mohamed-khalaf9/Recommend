@@ -1,5 +1,5 @@
 <?php
-
+include_once 'db.php';
 class LikesPdo{
     private $pdo;
 
@@ -7,6 +7,13 @@ class LikesPdo{
     {
         $this->pdo=$pdo;
         
+    }
+    public function is_liked($recID):bool{
+        $sql="SELECT COUNT(*) FROM likes WHERE recId=:recId";
+        $stm=$this->pdo->prepare($sql);
+        $stm->execute(['recId'=>$recID]);
+        $numOfLikes= $stm->fetchColumn();
+        return $numOfLikes>0;
     }
     public function add_like( $userId, $recID):bool{
         $recID = (int)$recID;
@@ -18,7 +25,7 @@ class LikesPdo{
             return false;
         }
         $sql2="UPDATE recommendations
-        SET numberOfLikes=numberOfLikes+1
+        SET numberOfLikes=COALESCE(numberOfLikes, 0)+1
         WHERE id=:recId";
         $stm2=$this->pdo->prepare($sql2);
        if(!($stm2->execute([':recId'=>$recID]))){

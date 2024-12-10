@@ -15,7 +15,7 @@ class UsersController{
     }
 
 
-    function processRequest($method,$data){
+    function processRequest($method,$userId,$data){
         if($method== "POST")
         {
             if(count($data)== 6)
@@ -27,6 +27,12 @@ class UsersController{
                 echo json_encode(["error" => "Data is not valid"]);
 
             }
+        }
+        else if($method=="GET"&&empty($id)&&empty($data))
+        {
+            $this->getUsersInfo($userId);
+
+
         }
 
     }
@@ -90,6 +96,23 @@ class UsersController{
             HttpResponse::send(200, null, ['message' => 'Login successful', 'token' => $token]);
         } else {
             HttpResponse::send(401, null, ['error' => 'Invalid email or password.']);
+        }
+
+    }
+
+    function getUsersInfo($userId)
+    {
+        try {
+            
+            $userProfile = $this->usersPdo->getUserProfile($userId);
+
+            if ($userProfile) {
+                HttpResponse::send(200, null, $userProfile); 
+            } else {
+                HttpResponse::send(404, null, ['error' => 'User not found.']);
+            }
+        } catch (Exception $e) {
+            HttpResponse::send(500, null, ['error' => 'Failed to fetch user profile.', 'details' => $e->getMessage()]);
         }
 
     }
