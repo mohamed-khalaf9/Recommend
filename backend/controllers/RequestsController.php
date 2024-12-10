@@ -27,9 +27,11 @@ class RequestsController{
           else if($method=="PUT"&&isset($userId)&&isset($id)&&isset($data)){
               if($data['status']=='approved'){
                   $this->approve_request($id,$userId);
+
               }
               if($data['status']=='rejected'){
                 $this->reject_request($id);
+
               }
           }
          else if($method=="POST"&& isset($id)&& empty($data))
