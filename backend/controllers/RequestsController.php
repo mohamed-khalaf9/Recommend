@@ -48,12 +48,12 @@ class RequestsController{
           return;
         }
        if($this->memberController->get_member_role($userId)!='Admin'){
-        HttpResponse::send(403,null,["error"=>"You are not allowed,you are not the admin "]);
+        HttpResponse::send(403,null,["message"=>"You are not allowed,you are not the admin "]);
         return;
        }
        $requests=$this->reqsPdo->get_pending_requests($circleId);
        if($requests){
-        HttpResponse::send(200,null,["message"=>$requests]);
+        HttpResponse::send(200,null,$requests);
        }
        else{
         HttpResponse::send(404,null,["message"=>"There are no pending requests "]);
