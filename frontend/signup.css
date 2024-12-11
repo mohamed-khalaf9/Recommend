@@ -70,6 +70,7 @@ form{
     border:1px solid #ebc7b0;
     border-radius: 20px ;
     color: #002c67;
+     font-weight: bold;
 }
 input:hover{
     background-color: #ebc7b0;
@@ -91,7 +92,9 @@ div{
     border-color:white ;
     color: white;
     background:#ff6d13;
-    margin-left: 95px;
+   margin-left: 100px;
+    margin-top: 30px;
+     font-size: 20px; 
 }
 #sign-up:hover{
     font-size: larger;
@@ -103,9 +106,12 @@ div{
 font-size: 1.5rem;
 color: #002c67;
 font-size: 15px;
-margin-top: 20px;
+margin-top: 15px;
 margin-left: 120px;
 }
 a{
     text-decoration-line: none;
+}
+span{
+    color: red;
 }
