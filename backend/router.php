@@ -52,8 +52,7 @@ class Router {
             $usersController->processRequest($method,$userId,$data);
         }
         else{
-            if ($token&&JwtHelper::verifyToken($token)){
-                $userId = $this->fetchUserIdFromToken($token);
+            if (JwtHelper::verifyToken($token)==true){
 
                 if ($resource == "circles") {
                     $circlesController = new CirclesController();
@@ -87,6 +86,7 @@ class Router {
             
 
             }
+
             else{
                 HttpResponse::send(401,null,["error" => "Unauthorized"]);
                 return;

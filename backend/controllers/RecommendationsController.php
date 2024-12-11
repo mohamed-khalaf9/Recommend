@@ -15,14 +15,13 @@ class RecommendationsController {
         $db = new Database();
         $pdo = $db->getConnection();
         $this->recsPdo = new RecommendationsPdo($pdo);
-        $this->circleController = new CirclesController();
-        $this->memberController = new MembersController();
+        
     }
 
     public function processRequest($method, $userId, $id, $data) {
         if ($method == 'POST' && isset($data) && isset($id)) {
             $this->create_recommendation($data, $userId, $id);
-        } elseif ($method == 'GET' && empty($data) && isset($id)) {
+        } else if ($method == 'GET' && empty($data) && isset($id)) {
             $this->get_recommendations($userId, $id);
         } else {
             HttpResponse::send(404, null, ["error" => "Not found"]);
@@ -41,12 +40,15 @@ class RecommendationsController {
             return;
         }
 
+        $this->memberController = new MembersController();
+        $this->circleController = new CirclesController();
+
         if (!$this->circleController->is_exist($circleId)) {
             HttpResponse::send(404, null, ["error" => "Circle not found. Please check the Circle ID."]);
             return;
         }
 
-        if (!$this->memberController->is_member($userId, $circleId)) {
+        if (!$this->memberController->isMember($userId, $circleId)) {
             HttpResponse::send(403, null, ["error" => "You are not a member of this circle."]);
             return;
         }
@@ -78,12 +80,15 @@ class RecommendationsController {
             return;
         }
 
+        $this->memberController = new MembersController();
+        $this->circleController = new CirclesController();
+
         if (!$this->circleController->is_exist($circleId)) {
             HttpResponse::send(404, null, ["error" => "Circle not found. Please check the Circle ID."]);
             return;
         }
 
-        if (!$this->memberController->is_member($userId, $circleId)) {
+        if (!$this->memberController->isMember($userId, $circleId)) {
             HttpResponse::send(403, null, ["error" => "You are not a member of this circle."]);
             return;
         }
@@ -94,6 +99,17 @@ class RecommendationsController {
         } else {
             HttpResponse::send(200, null, $recommendations);
         }
+    }
+
+    public function is_found($recId):bool
+    {
+        try {
+            return $this->recsPdo->is_found($recId);
+        } catch (Exception $e) {
+            error_log("Error in isFound: " . $e->getMessage());
+            return false;
+        }
+
     }
 }
 

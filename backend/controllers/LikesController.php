@@ -7,9 +7,10 @@ class LikesController {
     private $likesPdo;
     private $recController;
 
-    public function __construct($likesPdo, $recController) {
-        $this->likesPdo = $likesPdo;
-        $this->recController = $recController;
+    public function __construct() {
+        $db = new Database();
+        $pdo = $db->getConnection();
+        $this->likesPdo = new LikesPdo($pdo);
     }
 
     public function processRequest($method, $userId, $id, $data) {
@@ -25,6 +26,8 @@ class LikesController {
             HttpResponse::send(400, null, ["error" => "Recommendation ID is required."]);
             return;
         }
+
+        $this->recController = new RecommendationsController();
 
         if (!$this->recController->is_found($recID)) {
             HttpResponse::send(404, null, ["error" => "Recommendation not found."]);
