@@ -29,7 +29,12 @@ class CirclesController
             $this->delete_circle($id, $userId);
         } elseif ($method === "GET" && empty($id) && empty($data)) {
             $this->getUserCircles($userId);
-        } else {
+        } 
+        else if($method=="GET" && empty($data) && isset($id)){
+            $this->getCircleInfo($userId,$id);
+
+        }
+        else {
             HttpResponse::send(400, null, ["message" => "Invalid request"]);
         }
     }
@@ -138,6 +143,18 @@ class CirclesController
             HttpResponse::send(500, null, ['error' => 'Failed to fetch circles.', 'details' => $e->getMessage()]);
         }
     }
+
+    public function getCircleInfo($userId, $circleId)
+    {
+        $circleInfo = $this->circlesPdo->getCircleById($circleId);
+        if ($circleInfo != null) {
+
+            HttpResponse::send(200, null, $circleInfo);
+        } else {
+            HttpResponse::send(404, ["message" => "Circle not found"]);
+        }
+    }
+    
 }
 
 

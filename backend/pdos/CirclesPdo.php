@@ -1,5 +1,6 @@
 <?php
 include_once 'db.php';
+
 class CirclesPdo
 {
     private $pdo;
@@ -8,18 +9,19 @@ class CirclesPdo
     {
         $this->pdo = $pdo;
     }
-    public  function is_exist($circleId): bool
+
+    public function is_exist($circleId): bool
     {
         $sql = "SELECT id FROM circles WHERE id=:circleId";
         $stm = $this->pdo->prepare($sql);
         $stm->execute([':circleId' => $circleId]);
         return $stm->fetchColumn() !== false;
     }
+
     public function delete_circle($circleId): bool
     {
         $circleId = (int)$circleId;
-        $sql = "DELETE FROM circles
-          WHERE id=:circleId";
+        $sql = "DELETE FROM circles WHERE id=:circleId";
         $stm = $this->pdo->prepare($sql);
         return $stm->execute([':circleId' => $circleId]);
     }
@@ -27,10 +29,8 @@ class CirclesPdo
     public function createCircle(string $name, string $descr, string $createdAt, int $userId): bool
     {
         try {
-            // Begin transaction
             $this->pdo->beginTransaction();
 
-            // Insert into circles table
             $circleSql = "INSERT INTO circles (name, description, createdAt) VALUES (:name, :descr, :createdAt)";
             $circleStmt = $this->pdo->prepare($circleSql);
             $circleStmt->bindParam(':name', $name, PDO::PARAM_STR);
@@ -42,10 +42,8 @@ class CirclesPdo
                 return false;
             }
 
-            // Get the ID of the newly inserted circle
             $circleId = $this->pdo->lastInsertId();
 
-            // Insert into members table with role 'Admin'
             $memberSql = "INSERT INTO members (userId, circleId, role, createdAt) VALUES (:userId, :circleId, :role, :createdAt)";
             $memberStmt = $this->pdo->prepare($memberSql);
             $role = 'Admin';
@@ -59,20 +57,13 @@ class CirclesPdo
                 return false;
             }
 
-            // Commit transaction
             $this->pdo->commit();
             return true;
         } catch (PDOException $e) {
-            // Roll back transaction in case of error
             $this->pdo->rollBack();
             return false;
         }
     }
-
-
-
-
-
 
     public function getUserCircles(int $userId): array
     {
@@ -81,7 +72,7 @@ class CirclesPdo
         FROM members m
         JOIN circles c ON m.circleId = c.id
         WHERE m.userId = :userId
-    ";
+        ";
 
         $stmt = $this->pdo->prepare($query);
         $stmt->bindParam(':userId', $userId, PDO::PARAM_INT);
@@ -100,13 +91,14 @@ class CirclesPdo
 
             if ($stmt->execute()) {
                 $circle = $stmt->fetch(PDO::FETCH_ASSOC);
-                return $circle ?: null; // Return the circle details or null if not found
+                return $circle ?: null; 
             } else {
-                return null; // Query execution failed
+                return null; 
             }
         } catch (PDOException $e) {
             error_log("PDO Exception in getCircleById: " . $e->getMessage());
-            return null; // Return null in case of an exception
+            return null; 
         }
     }
 }
+?>
