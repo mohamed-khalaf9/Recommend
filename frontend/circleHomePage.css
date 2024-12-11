@@ -36,48 +36,26 @@
 .search-bar {
     display: flex;
     align-items: center;
-    border-radius: 28px;
     overflow: hidden;
     background-color: white;
 }
 
-.sea {
-    border: 2px solid #002855;
-    border-radius: 25px;
-    overflow: hidden;
-    margin-right: 20px;
+.leave{
+    margin-left: 15px;
+    background-color: transparent;
+    border: none;
+    font-size: 30px;
+    color: #002855;
 }
 
-.search-bar input {
-    padding: 5px 15px;
-    border: none;
-    outline: none;
-    font-size: 14px;
-    width: 200px
-}
-
-.search-bar .search {
-    background-color: #002855;
-    border: none;
-    padding: 5px 10px;
-    cursor: pointer;
-    color: white;
-    font-size: 16px;
-}
 
 .home {
 
-    background-color: #002855;
+    background-color: transparent;
     border: none;
-    padding: 5px 10px;
     cursor: pointer;
-    color: white;
-    font-size: 16px;
-    border-radius: 50%;
-}
-
-.search-bar button i {
-    font-size: 18px;
+    color: #002855;
+    font-size: 30px;
 }
 
 .meddle {
@@ -229,3 +207,13 @@
 button{
     cursor: pointer;
 }
+.close{
+    font-size: 40px;
+    background-color:  transparent;
+    border: none;
+    color: #000000;
+    position: absolute;
+    right: 5px;
+}
+
+ 

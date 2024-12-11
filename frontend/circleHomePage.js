@@ -2,7 +2,7 @@ const rec = document.getElementById("mid");
 var txt = "";
 var object = {
   id: 1,
-  desc: "A great resource to get started with AI concepts.",
+  desc: "A great resource to get started with AI concepts.Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsam aut, deserunt aliquam qui quam, facere illum quisquam error expedita sunt nisi dolorem voluptate assu            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsam aut, deserunt aliquam qui quam, facere illum quisquam error expedita sunt nisi dolorem voluptate assumenda magni sed, veniam saepe? Laboriosam, debitis.menda magni sed, veniam saepe? Laboriosam, debitis.",
   link: "https://www.facebook.com",
   likesnum: 125,
 };
@@ -46,3 +46,9 @@ for (let i = 0; i < links.length; i++) {
       });
   });
 }
+let close = document.getElementById("cl");
+close.addEventListener('click', () => {
+  let crea = document.getElementById("create");
+  crea.style.display = "none";
+})
+
