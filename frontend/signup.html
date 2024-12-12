@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SignUp</title>
+    <title>Sign Up</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css"
         integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -13,43 +13,39 @@
 
 <body>
     <div class="nav">
-        <img src="media/ui project dr.moheb.png" alt="THE PROJECT LOGO">
+        <img src="media/ui-project-dr-moheb.png" alt="THE PROJECT LOGO">
         <a href="index.html"><i class="fa-solid fa-house" id="home-icon"></i></a>
     </div>
     <i class="fa-solid fa-user" id="prof-icon"></i>
-    <h1 id="new-acc">CREATE NEW ACCOUNT !</h1>
+    <h1 id="new-acc">CREATE NEW ACCOUNT!</h1>
 
-    <form name="sign-in Form" action="" method="post">
-
+    <form name="signInForm" id="sign-in-form" method="post">
         <div>
             <label for="my-name">Name</label>
             <input type="text" name="name" id="my-name" class="data" required>
         </div>
         <div>
-            <label for="my-email">Email </label>
-            <input type="email" name="my-email" class="data" id="my-email" required>
+            <label for="my-email">Email</label>
+            <input type="email" name="email" id="my-email" class="data" required>
         </div>
         <div>
-            <label for="my-pass">Password </label>
-            <input type="password" name="my-pass" class="data" id="my-pass" required>
+            <label for="my-pass">Password</label>
+            <input type="password" name="password" id="my-pass" class="data" required>
         </div>
         <div>
-            <label for="college">Education </label>
-            <input type="text" name="college" class="data" id="college" required>
+            <label for="college">Education</label>
+            <input type="text" name="education" id="college" class="data" required>
         </div>
-        <!-- <div>
-            <label for="academic-year">Academic Year</label>
-            <input type="text" name="academic-year" class="data" id="academic-year" required>
-        </div> -->
         <div>
-            <label for="brief">Brief </label>
-            <input type="text" name="brief" class="data" id="brief" required>
+            <label for="brief">Brief</label>
+            <input type="text" name="brief" id="brief" class="data" required>
         </div>
-        <input type="submit" name="submit" value="Sign Up" id="sign-up">
-
+        <button type="submit" id="sign-up">Sign Up</button>
         <p id="pForm">Already Registered?<a href="login.html"><b> Login</b></a></p>
-
     </form>
+
+    <script src="signup.js"></script>
+    
 </body>
 
 </html>
