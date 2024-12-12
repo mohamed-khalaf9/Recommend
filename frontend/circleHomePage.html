@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Circle home page</title>
+    <link rel="stylesheet" href="circleHomePage.css" />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css"
+      integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+  </head>
+  <body>
+    <div class="container" id="aa">
+      <div class="header">
+        <div class="logo">
+          <img src=".\\media\\ui project dr.moheb1.png" alt="Logo" />
+          <p id="circleInfo"></p>
+        </div>
+        <div class="search-bar">
+          <button class="home">
+            <i class="fa-solid fa-house-chimney"></i>
+          </button>
+          <button class="leave">
+            <i class="fa-solid fa-right-from-bracket"></i>
+          </button>
+        </div>
+      </div>
+      <div class="meddle" id="mid">
+        <div class="recoms">
+          <div class="content">
+            <h1>Someone</h1>
+            <p class="desc">
+              This recommendation about: Lorem ipsum dolor, sit amet consectetur
+              adipisicing elit. Aliquam voluptatibus quidem ipsam hic
+              perspiciatis ullam nam quod reprehenderit earum. Possimus alias
+              atque a, iusto molestias voluptatum suscipit corporis sed quaerat?
+            </p>
+            <button class="like">
+              <i class="fa-regular fa-thumbs-up"></i>
+            </button>
+            <p class="counter">12</p>
+            <button class="link"><i class="fa-solid fa-link"></i></button>
+          </div>
+        </div>
+      </div>
+      <div class="footer">
+        <div class="left">
+          <button class="admin">
+            <i class="fa-solid fa-crown"></i> Dashboard
+          </button>
+        </div>
+        <div class="right">
+          <button class="add" id="add"><i class="fa-solid fa-plus"></i></button>
+        </div>
+      </div>
+    </div>
+    <div class="create" id="create">
+      <button class="close" id="cl"><i class="fa-solid fa-xmark"></i></button>
+      <div class="popup-content">
+        <h1>Create your recommendation</h1>
+        <form action="" name="addRecommendation">
+          <label for="title">Title:</label>
+          <input
+            type="text"
+            name="title"
+            id="title"
+            placeholder="Enter title"
+            required
+          />
+          <br />
+          <label for="brief">Brief:</label>
+          <input
+            type="text"
+            name="brief"
+            id="brief"
+            placeholder="Enter brief"
+            required
+          />
+          <br />
+          <label for="link">Link:</label>
+          <input
+            type="text"
+            name="link"
+            id="link"
+            placeholder="Enter link"
+            required
+          />
+          <br />
+          <button class="share2">
+            <i class="fa-solid fa-share"></i> Create
+          </button>
+        </form>
+      </div>
+    </div>
+    <script src="circleHomePage.js"></script>
+  </body>
+</html>
