@@ -10,27 +10,29 @@ body {
     height: 100vh;
     margin: 0;
 }
-/* .fa-house{
-    margin-bottom: 650px;
-    margin-left: 200px;
-} */
+
+.container {
+    text-align: center;
+}
+
+h1 {
+    font-size: 24px;
+    color: #ff6d13;  /* Orange color for the headline */
+    margin-bottom: 20px; /* Add margin below the heading */
+}
+
 .mycircles {
     background-color: white;
     border-radius: 10px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     padding: 20px;
     width: 400px;
-    text-align: center;
-}
-
-h1 {
-    font-size: 24px;
-    color: #ff6d13;
-    margin-bottom: 20px;
+    height: 400px; /* Fixed height for scrolling */
+    overflow-y: scroll; /* Enables vertical scrolling */
 }
 
 button {
-    background-color:#002c67;
+    background-color: #002c67;
     color: white;
     border: none;
     border-radius: 5px;
@@ -43,5 +45,5 @@ button {
 }
 
 button:hover {
-    background-color: #ff6d13;
+    background-color: #ff6d13;  /* Orange color on button hover */
 }

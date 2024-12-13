@@ -14,20 +14,21 @@
 <body>
     <div class="create">
         <h2>Create Circle :</h2>
-        <!-- <i class="fa-solid fa-circle-plus"></i> -->
         <div class="formm">
-            <form>
+            <form id="create-circle-form">
                 <h3><label for="name-inp">Circle Name:</label></h3>
-                <input type="text" name="name-inp" class="namee-inp" required>
+                <input type="text" id="name-inp" class="namee-inp" required>
                 <h3><label for="desc-inp">Circle Description:</label></h3>
-                <input type="text" name="desc-inp" class="descc-inp" required>
+                <input type="text" id="desc-inp" class="descc-inp" required>
             </form>
             <div class="btnfinish">
-                <input type="submit" name="create" value="Create" class="createbtn">
+                <button type="button" class="createbtn" onclick="createCircle()">Create</button>
             </div>
         </div>
+        <div id="response-message"></div> <!-- This will show the success or error message -->
     </div>
 
+    <script src="websiteHomePage.js"></script>
 </body>
 
 </html>
