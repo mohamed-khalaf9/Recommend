@@ -5,7 +5,7 @@ function frame1Loaded() {
         // Accessing content inside frame1
         var frame1 = window.frames['col1'];
         if (frame1) {
-            var requestsDiv = frame1.document.querySelector('.requests');
+            var requestsDiv = frame1.document.querySelector('.requsts');
             if (requestsDiv) {
                 fetchRequests(requestsDiv); // Assuming fetchRequests is defined
             } else {
@@ -194,9 +194,16 @@ function fetchCircles(myCirclesDiv) {
 
                     // Add click event to store circle id and role in localStorage
                     circleButton.addEventListener("click", function () {
+                        if (localStorage.getItem("circleId")) {
+                            localStorage.removeItem("circleId");
+                        }
                         localStorage.setItem("circleId", circle.id);
+                        if (localStorage.getItem("role")) {
+                            localStorage.removeItem("role");
+                        }
                         localStorage.setItem("role", circle.role);
-                        window.location.href = "circleHomePage.html";
+
+                        window.open('circleHomePage.html')
                     });
 
                     myCirclesDiv.appendChild(circleContainer);
