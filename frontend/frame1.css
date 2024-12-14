@@ -112,4 +112,5 @@ body {
 .log a {
     text-decoration: none;
     color: #002c67;
+    cursor: pointer;
 }
