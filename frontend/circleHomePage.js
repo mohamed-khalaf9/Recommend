@@ -25,7 +25,7 @@ function circleInfoAndRole() {
       if (role != "Admin") {
         admin.style.display = "none";
       }
-      if (role == "Admin") {
+      else{
         leave.style.display = "none";
       }
     })
