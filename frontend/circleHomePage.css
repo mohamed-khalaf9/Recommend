@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Anton&family=Fira+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
 * {
     margin: 0;
     padding: 0;
@@ -27,10 +28,10 @@
 }
 
 .header .logo p {
-    font-size: 30px;
+    font-size: 25px;
     font-family: "Anton", sans-serif;
     font-weight: bold;
-    color: #FF5722;
+    color: #002855;
 }
 
 .search-bar {
@@ -40,7 +41,7 @@
     background-color: white;
 }
 
-.leave{
+.leave {
     margin-left: 15px;
     background-color: transparent;
     border: none;
@@ -68,7 +69,7 @@
     background-color: #ffd1b5;
     border-radius: 30px;
     width: 75%;
-    margin: 0 auto;
+    margin: 0 auto 20px;
     z-index: 100;
 }
 
@@ -95,9 +96,11 @@
     font-size: 30px;
     cursor: pointer;
 }
-.link{
+
+.link {
     margin-left: 40%;
 }
+
 .counter {
     display: inline;
     font-size: 30px;
@@ -105,6 +108,9 @@
 
 .desc {
     font-size: 20px;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    overflow: hidden;
 }
 
 .footer {
@@ -124,8 +130,8 @@
 }
 
 .footer .right {
-    position: relative;
-    right: -85%;
+    position: absolute;
+    right: 20px;
     width: 20px;
 }
 
@@ -153,9 +159,7 @@
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
-    /* Semi-transparent overlay */
     display: none;
-    /* Initially hidden */
     z-index: 1000;
 }
 
@@ -206,26 +210,26 @@
     cursor: pointer;
     width: 100%;
 }
-button{
+
+button {
     cursor: pointer;
     transition: 1s;
 }
-.close{
+
+.close {
     font-size: 40px;
-    background-color:  transparent;
+    background-color: transparent;
     border: none;
     position: absolute;
     right: 5px;
 }
 
-button:hover{
+button:hover {
     color: #FF5722;
 }
- 
-.share2:hover{
+
+.share2:hover {
     background-color: #FF5722;
     color: #002855;
-    
+
 }
-
-

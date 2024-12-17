@@ -1,54 +1,222 @@
-const rec = document.getElementById("mid");
-var txt = "";
-var object = {
-  id: 1,
-  desc: "A great resource to get started with AI concepts.Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsam aut, deserunt aliquam qui quam, facere illum quisquam error expedita sunt nisi dolorem voluptate assu            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsam aut, deserunt aliquam qui quam, facere illum quisquam error expedita sunt nisi dolorem voluptate assumenda magni sed, veniam saepe? Laboriosam, debitis.menda magni sed, veniam saepe? Laboriosam, debitis.",
-  link: "https://www.facebook.com",
-  likesnum: 125,
-};
-for (let i = 0; i < 10; i++) {
-  txt += `<div class="recoms" id="${object.id}" ><div class="content"><h1>Someone</h1><p class="desc">This recommendation about: ${object.desc}</p><button class="like"> <i class="fa-regular fa-thumbs-up"></i></button><p class="counter">${object.likesnum}</p><button class="link" ><i class="fa-solid fa-link"></i></button></div></div>`;
-  txt += "<br/>";
-}
-rec.innerHTML = txt;
-let btn = document.getElementById("add");
-btn.addEventListener("click", () => {
-  let crea = document.getElementById("create");
-  crea.style.display = "block";
-});
+let role = localStorage.getItem("role");
+let token = localStorage.getItem("token");
+let circleId = localStorage.getItem("circleId");
 
-let btns = document.getElementsByClassName("like");
-let paras = document.getElementsByClassName("counter");
-for (let i = 0; i < btns.length; i++) {
-  btns[i].addEventListener("click", () => {
-    let cnt = paras[i].innerHTML;
-    let num = parseInt(cnt);
-    num++;
-    paras[i].innerHTML = num;
-    object.likesnum = num;
-    let parent = btns[i].parentNode;
-    let id = parent.parentNode.id;
-    alert(`this recommendation id = ${id}`);
+function circleInfoAndRole() {
+  let url = `http://localhost/Recommend/backend/circles/${circleId}`;
+  fetch(url, {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  })
+    .then((response) => {
+      if (response.ok) {
+        return response.json();
+      } else {
+        throw new Error(`there is an error with status: ${response.status}`);
+      }
+    })
+    .then((data) => {
+      let info = document.getElementById("circleInfo");
+      info.innerHTML = data.name;
+      let admin = document.getElementById("left");
+      let leave=document.getElementById('leave')
+      if (role != "Admin") {
+        admin.style.display = "none";
+        leave.style.display='none'
+      }
+    })
+    .catch((error) => {
+      console.error("Error fetching circle info:", error);
+    });
+}
+
+function validateLink(link) {
+  try {
+    new URL(link);
+    return true;
+  } catch (e) {
+    return false;
+  }
+}
+
+function addRecommendation() {
+  let add = document.getElementById("add");
+  let create = document.getElementById("create");
+  add.addEventListener("click", () => {
+    create.style.display = "block";
   });
-}
 
-let links = document.getElementsByClassName("link");
-for (let i = 0; i < links.length; i++) {
-  links[i].addEventListener("click", () => {
-    navigator.clipboard
-      .writeText(object.link)
-      .then(() => {
-        alert("Link copied to clipboard: " + object.link);
+  let close = document.getElementById("cl");
+  close.addEventListener("click", () => {
+    create.style.display = "none";
+  });
+
+  document.getElementById("share2").addEventListener("click", () => {
+    let Title = document.getElementById("title").value;
+    let Brief = document.getElementById("brief").value;
+    let Link = document.getElementById("link").value;
+    let year = new Date().getFullYear();
+    let month = new Date().getMonth() + 1;
+    let day = new Date().getDate();
+    let status = document.getElementById("inputStatus");
+
+    if (!validateLink(Link) || !Brief || !Title) {
+      status.innerHTML = "There is something wrong with the inputs";
+      status.style.color = "red";
+    } else {
+      let recommendation = {
+        title: Title,
+        brief: Brief,
+        link: Link,
+        date: `${year}-${month}-${day}`,
+      };
+
+      let url = `http://localhost/Recommend/backend/recommendations/${circleId}`;
+
+      fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(recommendation),
       })
-      .catch((err) => {
-        console.error("Failed to copy link: ", err);
-        alert("Failed to copy the link. Please try again.");
-      });
+        .then((response) => {
+          if (response.ok) {
+            return response.json();
+          } else {
+            return response.json().then((data) => {
+              throw new Error(`Error: ${response.status}, ${data.message}`);
+            });
+          }
+        })
+        .then((data) => {
+          console.log("Success:", data);
+          create.style.display = "none";
+          getRecommendations(); // Refresh the recommendations
+        })
+        .catch((error) => {
+          console.error("Error creating recommendation:", error);
+          status.innerHTML = "Error creating recommendation.";
+          status.style.color = "red";
+        });
+    }
   });
 }
-let close = document.getElementById("cl");
-close.addEventListener('click', () => {
-  let crea = document.getElementById("create");
-  crea.style.display = "none";
-})
 
+function getRecommendations() {
+  let url = `http://localhost/Recommend/backend/recommendations/${circleId}`;
+  fetch(url, {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  })
+    .then((response) => {
+      if (response.ok) {
+        return response.json();
+      } else {
+        let recoms = document.getElementById("recoms");
+        recoms.innerHTML = `There are no available recommendations right now.`;
+        recoms.style.backgroundColor = "white";
+        recoms.style.color = "red";
+      }
+    })
+    .then((data) => {
+      let text = "";
+      data.forEach((recommendation) => {
+        let likes = recommendation.numberOfLikes;
+        if (likes == null) {
+          likes = 0;
+        }
+        text += `<div class="recoms" id="recoms-${recommendation.id}">
+          <div class="content">
+            <h1>${recommendation.username}</h1>
+            <p class="desc">${recommendation.desc}</p>
+            <button class="like" data-id="${recommendation.id}">
+              <i class="fa-regular fa-thumbs-up"></i>
+            </button>
+            <p class="counter" id="counter-${recommendation.id}">${likes}</p>
+            <button class="link" data-link="${recommendation.link}"><i class="fa-solid fa-link"></i></button>
+          </div>
+        </div>`;
+      });
+      let mid = document.getElementById("mid");
+      mid.innerHTML = text;
+      addLikeListeners();
+      addCopyLinkListeners();
+    })
+    .catch((error) => {
+      console.error("Error fetching recommendations:", error);
+    });
+}
+function addLikeListeners() {
+  let recommendations = document.querySelectorAll(".recoms");
+  recommendations.forEach((recommendation) => {
+    recommendation.addEventListener("click", function (event) {
+      if (event.target && event.target.closest(".like")) {
+        let button = event.target.closest(".like");
+        let recommendationId = button.getAttribute("data-id");
+        incrementLike(recommendationId);
+      }
+    });
+  });
+}
+
+function incrementLike(recommendationId) {
+  let counter = document.getElementById(`counter-${recommendationId}`);
+  let url = `http://localhost/Recommend/backend/likes/${recommendationId}`;
+  fetch(url, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  })
+    .then((response) => {
+      if (response.status === 201) {
+        return response.json();
+      } else {
+        return response.json().then((data) => {
+          throw new Error(`Error: ${response.status}, ${data.message}`);
+        });
+      }
+    })
+    .then((data) => {
+      console.log("Like count updated successfully:", data);
+      getRecommendations()
+    })
+    .catch((error) => {
+      console.error("Error updating like count:", error);
+      alert("you are already liked this recommendation");
+    });
+}
+
+function addCopyLinkListeners() {
+  document.getElementById("mid").addEventListener("click", function (event) {
+    if (event.target && event.target.closest(".link")) {
+      let button = event.target.closest(".link");
+      let link = button.getAttribute("data-link");
+      copyToClipboard(link);
+    }
+  });
+}
+
+function copyToClipboard(link) {
+  navigator.clipboard
+    .writeText(link)
+    .then(() => {
+      alert("Link copied to clipboard!");
+    })
+    .catch((err) => {
+      console.error("Could not copy link: ", err);
+    });
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  circleInfoAndRole();
+  addRecommendation();
+  getRecommendations();
+  addLikeListeners();
+});
