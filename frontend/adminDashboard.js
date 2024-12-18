@@ -14,9 +14,12 @@ function getMembersOfCircle() {
       if (response.ok) return response.json();
       else {
         console.log(response.status);
+        membersList.innerHTML = "there is no members in the circle"
+        membersList.style.color = 'red';
       }
     })
     .then((data) => {
+      membersList.innerHTML = "";
       data.forEach((member) => {
         const memberItem = document.createElement("li");
         memberItem.innerHTML = `
@@ -33,17 +36,24 @@ function removeMember(memberid) {
     method: "DELETE",
     headers: {
       Authorization: `Bearer ${token}`,
-      "Content-Type": "application/json",
     },
-    body: JSON.stringify({ circlId: `${CircleId}` }),
-  }).then((response) => {
-    if (response.ok) {
-      return response.json();
-    } else {
-      alert("Internal server error");
-      console.log(response.status);
-    }
-  });
+    body: JSON.stringify({ circleId: `${CircleId}` }),
+  })
+    .then((response) => {
+      if (response.ok) {
+        return response.json();
+      } else {
+        alert("Internal server error");
+        console.log(response.status);
+      }
+    })
+    .then((data) => {
+      console.log(data);
+      getMembersOfCircle()
+    })
+    .catch((error) => {
+      console.error("Fetch error:", error);
+    });
 }
 function getRequests() {
   let url = `http://localhost/Recommend/backend/requests/${CircleId}`;
@@ -62,6 +72,7 @@ function getRequests() {
       }
     })
     .then((data) => {
+      requestsList.innerHTML = "";
       data.forEach((request) => {
         const requestItem = document.createElement("li");
         requestItem.innerHTML = `
@@ -124,20 +135,20 @@ function rejectRequest(requestId) {
 function deleteCircle() {
   let url = `http://localhost/Recommend/backend/circles/${CircleId}`;
   fetch(url, {
-    Method: 'DELETE',
-    Headers:
-    {
-      'Authorization': `Bearer ${token}`,
-    }
+    method: 'DELETE',
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
   }).then(response => {
     if (response.ok) {
-      return respone.json()
+      alert("circle deleted successfully");
     }
     else {
-      alert('Internal server error', response.status)
+      alert("Internal server error",response.body);
     }
   }).then(data => {
-    alert(data);
+    console.log(data);
+    window.location = 'webSiteHomePage.html';
   })
 }
 
