@@ -226,23 +226,29 @@ function copyToClipboard(link) {
 }
 
 function leaveCircle() {
-  let url = `http://localhost/Recommend/backend/members/${circleId}`;
-  fetch(url, {
-    method: 'DELETE',
-    headers: {
-      Authorization:`Bearer ${token}`
-    }
-  }).then(response => {
-    if (response.ok) {
-      return response.json()
-    }
-    else {
-      alert("circle deleted successfully");
-    }
-  }).then(data => {
-    console.log(data);
-    window.location = 'webSiteHomePage.html'
-  })
+  let confirmation = confirm('You are about to leave');
+  if (confirmation) {
+    let url = `http://localhost/Recommend/backend/members/${circleId}`;
+    fetch(url, {
+      method: 'DELETE',
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    }).then(response => {
+      if (response.ok) {
+        return response.json()
+      }
+      else {
+        alert("circle deleted successfully");
+      }
+    }).then(data => {
+      console.log(data);
+      window.location = 'webSiteHomePage.html'
+    })
+  }
+  else {
+    alert('You are stil in the Circle');
+  }
 }
 
 document.addEventListener("DOMContentLoaded", () => {

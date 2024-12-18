@@ -1,9 +1,10 @@
 let token = localStorage.getItem("token");
 let CircleId = localStorage.getItem("circleId");
-const membersList = document.getElementById("members");
-const requestsList = document.getElementById("requests");
+const membersList = document.getElementById("membersList");
+const requestsList = document.getElementById("requestsList");
 
 function getMembersOfCircle() {
+   membersList.innerHTML = "<h2>Members :</h2>";
   fetch(`http://localhost/Recommend/backend/members/${CircleId}`, {
     method: "GET",
     headers: {
@@ -14,48 +15,57 @@ function getMembersOfCircle() {
       if (response.ok) return response.json();
       else {
         console.log(response.status);
-        membersList.innerHTML = "there is no members in the circle"
-        membersList.style.color = 'red';
+        let para1 = document.createElement('p');
+        para1.innerHTML = 'there is no members in the circle';
+        membersList.appendChild(para1);
+        para1.style.color = 'red';
       }
     })
     .then((data) => {
-      membersList.innerHTML = "";
       data.forEach((member) => {
         const memberItem = document.createElement("li");
-        memberItem.innerHTML = `
-          <span>${member.name}</span>
+        memberItem.innerHTML += `
+          <span>${member.name}: ${member.brief}</span>
           <button onclick="removeMember(${member.id})" class="remove"><i class="fa-regular fa-circle-xmark"></i></button>
         `;
         membersList.appendChild(memberItem);
       });
     });
 }
+
 function removeMember(memberid) {
-  let url = `http://localhost/Recommend/backend/members/${memberid}`;
-  fetch(url, {
-    method: "DELETE",
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-    body: JSON.stringify({ circleId: `${CircleId}` }),
-  })
-    .then((response) => {
-      if (response.ok) {
-        return response.json();
-      } else {
-        alert("Internal server error");
-        console.log(response.status);
-      }
+  let userConfirmed = confirm("Are you sure you want to proceed?");
+  if (userConfirmed) {
+    let url = `http://localhost/Recommend/backend/members/${memberid}`;
+    fetch(url, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({ circleId: `${CircleId}` }),
     })
-    .then((data) => {
-      console.log(data);
-      getMembersOfCircle()
-    })
-    .catch((error) => {
-      console.error("Fetch error:", error);
-    });
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        } else {
+          alert("Internal server error");
+          console.log(response.status);
+        }
+      })
+      .then((data) => {
+        console.log(data);
+        getMembersOfCircle()
+      })
+      .catch((error) => {
+        console.error("Fetch error:", error);
+      });
+  }
+  else {
+    alert("Member not removed");
+  }
 }
 function getRequests() {
+  requestsList.innerHTML="<h2>Requests :</h2>"
   let url = `http://localhost/Recommend/backend/requests/${CircleId}`;
   fetch(url, {
     method: "GET",
@@ -67,16 +77,18 @@ function getRequests() {
       if (response.ok) {
         return response.json();
       } else {
-        requestsList.innerHTML = "there are no pending requests.";
-        requestsList.style.color = "red";
+        let para = document.createElement('p');
+        para.innerHTML += "there are no pending requests.";
+        para.style.color = "red";
+        requestsList.appendChild(para)
       }
     })
     .then((data) => {
-      requestsList.innerHTML = "";
+      // requestsList.innerHTML = "";
       data.forEach((request) => {
         const requestItem = document.createElement("li");
-        requestItem.innerHTML = `
-          <span>${request.username}</span>
+        requestItem.innerHTML += `
+          <span>${request.username}: ${request.brief}</span>
             <button class="accept" onclick="approveRequest(${request.requestId})"><i class="fa-regular fa-circle-check"></i></button>
             <button class="reject" onclick="rejectRequest(${request.requestId})"><i class="fa-regular fa-circle-xmark"></i></button>
         `;
@@ -104,6 +116,8 @@ function approveRequest(requestId) {
     })
     .then((data) => {
       console.log(data);
+      membersList.innerHTML = "";
+      requestsList.innerHTML = "";
       getRequests();
       getMembersOfCircle();
     });
@@ -133,23 +147,29 @@ function rejectRequest(requestId) {
 }
 
 function deleteCircle() {
-  let url = `http://localhost/Recommend/backend/circles/${CircleId}`;
-  fetch(url, {
-    method: 'DELETE',
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  }).then(response => {
-    if (response.ok) {
-      alert("circle deleted successfully");
-    }
-    else {
-      alert("Internal server error",response.body);
-    }
-  }).then(data => {
-    console.log(data);
-    window.location = 'webSiteHomePage.html';
-  })
+  let userConfirmed2 = confirm("Are you sure you want to proceed?");
+  if (userConfirmed2) {
+    let url = `http://localhost/Recommend/backend/circles/${CircleId}`;
+    fetch(url, {
+      method: 'DELETE',
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }).then(response => {
+      if (response.ok) {
+        alert("circle deleted successfully");
+      }
+      else {
+        alert("Internal server error", response.body);
+      }
+    }).then(data => {
+      console.log(data);
+      window.location = 'webSiteHomePage.html';
+    })
+  }
+  else {
+    alert("Circle not deleted");
+  }
 }
 
 document.addEventListener("DOMContentLoaded", () => {
