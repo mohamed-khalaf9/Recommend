@@ -13,7 +13,7 @@ font-size: 1.5rem;
 
 #002c67 blue
 
-#ffd1b5     creamy*/
+#ffd1b5     creamy*/
 *{
     margin: 0;
     padding: 0;
@@ -62,14 +62,15 @@ form{
     border-radius: 20px;
     background-color: #fcf3ee;
     width: 450px;
-    height: 490px;
+    height: 500px;
 }
 .data{
     width: 99%;
     height: 30px;
     border:1px solid #ebc7b0;
     border-radius: 20px ;
-    color: #002c67;
+    color: #033d88;
+    font-weight: bold;
 }
 input:hover{
     background-color: #ebc7b0;
@@ -91,10 +92,12 @@ div{
     border-color:white ;
     color: white;
     background:#ff6d13;
-    margin-left: 95px;
+    margin-left: 100px;
+    margin-top: 30px;
+     font-size: 20px; 
 }
 #sign-up:hover{
-    font-size: larger;
+    font-size: 22px;
     background: #002c67;
 }
 #pForm{
@@ -103,9 +106,13 @@ div{
 font-size: 1.5rem;
 color: #002c67;
 font-size: 15px;
-margin-top: 20px;
+margin-top: 15px;
 margin-left: 120px;
 }
 a{
     text-decoration-line: none;
 }
+span{
+    color: red;
+}
+
