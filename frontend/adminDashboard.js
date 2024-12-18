@@ -1,8 +1,10 @@
 let token = localStorage.getItem("token");
-let circleId = localStorage.getItem("circleID");
+let CircleId = localStorage.getItem("circleId");
+const membersList = document.getElementById("members");
+const requestsList = document.getElementById("requests");
+
 function getMembersOfCircle() {
-  let url = `http://localhost/Recommend/backend/members/${circleId}`;
-  fetch(url, {
+  fetch(`http://localhost/Recommend/backend/members/${CircleId}`, {
     method: "GET",
     headers: {
       Authorization: `Bearer ${token}`,
@@ -11,85 +13,135 @@ function getMembersOfCircle() {
     .then((response) => {
       if (response.ok) return response.json();
       else {
-        let membersList = document.getElementById("members");
-        membersList.innerHTML = "No members joined to this circle.";
-        membersList.style.color = "red";
+        console.log(response.status);
       }
     })
     .then((data) => {
       data.forEach((member) => {
-        let text = "";
-        text += ` <li>
-                   <span>${member.name}</span>
-                    <button class="remove" onclick="removeMember(${memberId})">
-                      <i class="fa-regular fa-circle-xmark"></i>
-                    </button>
-                  </li>`;
+        const memberItem = document.createElement("li");
+        memberItem.innerHTML = `
+          <span>${member.name}</span>
+          <button onclick="removeMember(${member.id})" class="remove"><i class="fa-regular fa-circle-xmark"></i></button>
+        `;
+        membersList.appendChild(memberItem);
       });
-      let membersList = document.getElementById("members");
-      membersList.innerHTML = text;
-    })
-    .catch((error) => {
-      console.log(error);
     });
 }
-
-function getPendingRequests() {
-  let url = `http://localhost/Recommend/backend/requests/${circleId}`;
+function removeMember(memberid) {
+  let url = `http://localhost/Recommend/backend/members/${memberid}`;
   fetch(url, {
-    Method: "GET",
-    Headers: {
-      Authorization: `${token}`,
+    method: "DELETE",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ circlId: `${CircleId}` }),
+  }).then((response) => {
+    if (response.ok) {
+      return response.json();
+    } else {
+      alert("Internal server error");
+      console.log(response.status);
+    }
+  });
+}
+function getRequests() {
+  let url = `http://localhost/Recommend/backend/requests/${CircleId}`;
+  fetch(url, {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${token}`,
     },
   })
     .then((response) => {
-      if (response.ok) return response.json();
-      else {
-        let requestsList = document.getElementById("requests");
+      if (response.ok) {
+        return response.json();
+      } else {
         requestsList.innerHTML = "there are no pending requests.";
         requestsList.style.color = "red";
       }
     })
     .then((data) => {
       data.forEach((request) => {
-        let text = "";
-        text += ` <li class="item">
-            <span>Request x</span>
-            <button class="accept">
-              <i class="fa-regular fa-circle-check"></i>
-            </button>
-            <button class="reject">
-              <i class="fa-regular fa-circle-xmark"></i>
-            </button>
-          </li>`;
+        const requestItem = document.createElement("li");
+        requestItem.innerHTML = `
+          <span>${request.username}</span>
+            <button class="accept" onclick="approveRequest(${request.requestId})"><i class="fa-regular fa-circle-check"></i></button>
+            <button class="reject" onclick="rejectRequest(${request.requestId})"><i class="fa-regular fa-circle-xmark"></i></button>
+        `;
+        requestsList.appendChild(requestItem);
       });
-      let membersList = document.getElementById("members");
-      membersList.innerHTML = text;
     });
 }
 
-function removeMember(memberId) {
-  fetch(`http://localhost/Recommend/backend/members/${memberId}`, {
-    method: "DELETE",
+function approveRequest(requestId) {
+  let url = `http://localhost/Recommend/backend/requests/${requestId}`;
+  fetch(url, {
+    method: "Put",
     headers: {
-      Authorization: token,
-      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
     },
-    body: JSON.stringify({ circleId }),
+    body: JSON.stringify({ status: "approved" }),
   })
-    .then((response) => response.json())
-    .then((data) => {
+    .then((response) => {
       if (response.ok) {
-        alert(data.message);
-        fetchMembers();
+        alert("request accepted and member added successfully to the circle");
+        return response.json();
       } else {
-        alert("Error: " + data.message);
+        alert("Internal server error");
       }
     })
-    .catch((error) => console.error("Error removing member:", error));
+    .then((data) => {
+      console.log(data);
+      getRequests();
+      getMembersOfCircle();
+    });
 }
 
+function rejectRequest(requestId) {
+  let url = `http://localhost/Recommend/backend/requests/${requestId}`;
+  fetch(url, {
+    method: "Put",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({ status: "rejected" }),
+  })
+    .then((response) => {
+      if (response.ok) {
+        alert("request rejected successfully");
+        return response.json();
+      } else {
+        alert("Internal server error");
+      }
+    })
+    .then((data) => {
+      console.log(data);
+      getRequests();
+    });
+}
+
+function deleteCircle() {
+  let url = `http://localhost/Recommend/backend/circles/${CircleId}`;
+  fetch(url, {
+    Method: 'DELETE',
+    Headers:
+    {
+      'Authorization': `Bearer ${token}`,
+    }
+  }).then(response => {
+    if (response.ok) {
+      return respone.json()
+    }
+    else {
+      alert('Internal server error', response.status)
+    }
+  }).then(data => {
+    alert(data);
+  })
+}
 
 document.addEventListener("DOMContentLoaded", () => {
   getMembersOfCircle();
+  getRequests();
 });

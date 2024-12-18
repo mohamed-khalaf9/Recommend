@@ -79,6 +79,7 @@ h1::after {
 .left li,
 .right li {
     margin-bottom: 15px;
+    align-items: left;
 }
 
 span {
