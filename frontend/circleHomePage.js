@@ -22,7 +22,7 @@ function circleInfoAndRole() {
       info.innerHTML = data.name;
       let admin = document.getElementById("left");
       let leave = document.getElementById("leave");
-      if (role != "Admin") {
+      if (role !== "Admin") {
         admin.style.display = "none";
       } else {
         leave.style.display = "none";
@@ -128,28 +128,33 @@ function getRecommendations() {
     .then((data) => {
       let text = "";
       data.forEach((recommendation) => {
-        let likes = recommendation.numberOfLikes;
-        if (likes == null) {
-          likes = 0;
-        }
+        let likes = recommendation.numberOfLikes || 0;
         text += `
-        <div class="recoms" id="recoms-${recommendation.id}" >
-        <div class="content" >
-            <h2> ${recommendation.username}  </h2> <br>
-            <h3 class="title">
+        <div class="recoms" id="recoms-${recommendation.id}" 
+             style="background-color: #ffdcc8; border-radius: 15px; padding: 15px; margin: 10px auto; 
+             max-width: 600px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); display: flex; 
+             justify-content: space-between; align-items: center;">
+             
+        <div class="content" style="flex: 1;">
+            <h2 style="color: #1b3f5e; font-size: 1.2em; margin: 0; font-weight: bold;"> ${recommendation.username}  </h2> <br>
+            <h3 class="title" style="font-weight: bold; margin: 5px 0; font-size: 1em;">
             ${recommendation.title}
             </h3>
-            <p class="desc">${recommendation.desc} </p>
+            <p class="desc" style="margin: 0; color: #333; font-size: 1.1em; line-height: 1.4;">${recommendation.desc} </p>
         </div>
-        <div class="actions">
-            <button class="like" data-id="${recommendation.id}">
-              <i class="fa-regular fa-thumbs-up" ></i>
+        <div class="actions" style="display: flex; align-items: center;">
+            <button class="like" data-id="${recommendation.id}" 
+                    style="border: none; background: none; cursor: pointer; margin-right: 10px;">
+              <i class="fa-regular fa-thumbs-up" style="font-size: 1.2em;"></i>
             </button>
-            <p class="counter" id="counter-${recommendation.id}" >${likes}</p>
+            <p class="counter" id="counter-${recommendation.id}" 
+               style="margin: 0 10px; font-weight: bold;">${likes}</p>
+            
            <button class="link" data-link="${recommendation.link}" 
-        onclick="copyLink('${recommendation.link}')">
-        <i class="fa-regular fa-copy"></i>
-       </button>
+        onclick="copyLink('${recommendation.link}')"
+        style="border: none; background: none; cursor: pointer;">
+  <i class="fa-regular fa-copy" style="font-size: 1.2em;"></i>
+</button>
 
           </div>
         </div>`;
@@ -163,6 +168,7 @@ function getRecommendations() {
       console.error("Error fetching recommendations:", error);
     });
 }
+
 function addLikeListeners() {
   let recommendations = document.querySelectorAll(".recoms");
   recommendations.forEach((recommendation) => {
@@ -200,7 +206,7 @@ function incrementLike(recommendationId) {
     })
     .catch((error) => {
       console.error("Error updating like count:", error);
-      alert("you are already liked this recommendation");
+      alert("You have already liked this recommendation");
     });
 }
 
@@ -225,35 +231,8 @@ function copyToClipboard(link) {
     });
 }
 
-function leaveCircle() {
-  let confirmation = confirm('You are about to leave');
-  if (confirmation) {
-    let url = `http://localhost/Recommend/backend/members/${circleId}`;
-    fetch(url, {
-      method: 'DELETE',
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    }).then(response => {
-      if (response.ok) {
-        return response.json()
-      }
-      else {
-        alert("circle deleted successfully");
-      }
-    }).then(data => {
-      console.log(data);
-      window.location = 'webSiteHomePage.html'
-    })
-  }
-  else {
-    alert('You are stil in the Circle');
-  }
-}
-
 document.addEventListener("DOMContentLoaded", () => {
   circleInfoAndRole();
   addRecommendation();
   getRecommendations();
-  addLikeListeners();
 });

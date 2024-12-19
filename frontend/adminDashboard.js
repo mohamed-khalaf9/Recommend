@@ -4,7 +4,7 @@ const membersList = document.getElementById("membersList");
 const requestsList = document.getElementById("requestsList");
 
 function getMembersOfCircle() {
-   membersList.innerHTML = "<h2>Members :</h2>";
+  membersList.innerHTML = "<h2>Members :</h2>";
   fetch(`http://localhost/Recommend/backend/members/${CircleId}`, {
     method: "GET",
     headers: {
@@ -54,18 +54,18 @@ function removeMember(memberid) {
       })
       .then((data) => {
         console.log(data);
-        getMembersOfCircle()
+        getMembersOfCircle();
       })
       .catch((error) => {
         console.error("Fetch error:", error);
       });
-  }
-  else {
+  } else {
     alert("Member not removed");
   }
 }
+
 function getRequests() {
-  requestsList.innerHTML="<h2>Requests :</h2>"
+  requestsList.innerHTML = "<h2>Requests :</h2>";
   let url = `http://localhost/Recommend/backend/requests/${CircleId}`;
   fetch(url, {
     method: "GET",
@@ -80,11 +80,10 @@ function getRequests() {
         let para = document.createElement('p');
         para.innerHTML += "there are no pending requests.";
         para.style.color = "red";
-        requestsList.appendChild(para)
+        requestsList.appendChild(para);
       }
     })
     .then((data) => {
-      // requestsList.innerHTML = "";
       data.forEach((request) => {
         const requestItem = document.createElement("li");
         requestItem.innerHTML += `
@@ -100,7 +99,7 @@ function getRequests() {
 function approveRequest(requestId) {
   let url = `http://localhost/Recommend/backend/requests/${requestId}`;
   fetch(url, {
-    method: "Put",
+    method: "PUT",
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -126,7 +125,7 @@ function approveRequest(requestId) {
 function rejectRequest(requestId) {
   let url = `http://localhost/Recommend/backend/requests/${requestId}`;
   fetch(url, {
-    method: "Put",
+    method: "PUT",
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -151,23 +150,23 @@ function deleteCircle() {
   if (userConfirmed2) {
     let url = `http://localhost/Recommend/backend/circles/${CircleId}`;
     fetch(url, {
-      method: 'DELETE',
+      method: "DELETE",
       headers: {
         Authorization: `Bearer ${token}`,
       },
-    }).then(response => {
-      if (response.ok) {
-        alert("circle deleted successfully");
-      }
-      else {
-        alert("Internal server error", response.body);
-      }
-    }).then(data => {
-      console.log(data);
-      window.location = 'webSiteHomePage.html';
     })
-  }
-  else {
+      .then((response) => {
+        if (response.ok) {
+          alert("circle deleted successfully");
+        } else {
+          alert("Internal server error", response.body);
+        }
+      })
+      .then((data) => {
+        console.log(data);
+        window.location = "webSiteHomePage.html";
+      });
+  } else {
     alert("Circle not deleted");
   }
 }
@@ -176,3 +175,4 @@ document.addEventListener("DOMContentLoaded", () => {
   getMembersOfCircle();
   getRequests();
 });
+
