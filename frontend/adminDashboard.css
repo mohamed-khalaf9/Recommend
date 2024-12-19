@@ -45,9 +45,11 @@ h1::after {
     border: none;
 
 }
-.delete:hover{
+
+.delete:hover {
     background-color: #002c67;
 }
+
 .meddle {
     display: flex;
     margin-top: 40px;
@@ -58,8 +60,8 @@ h1::after {
     flex-direction: column;
     align-items: center;
     border: 2px solid black;
-    width: 20%;
-    margin-left:25%;
+    width: 40%;
+    margin-left: 7%;
     font-size: 20px;
 }
 
@@ -68,35 +70,42 @@ h1::after {
     flex-direction: column;
     align-items: center;
     border: 2px solid black;
-    width: 20%;
-    margin-left: 100px;
+    width: 40%;
+    margin-left: 90px;
     font-size: 20px;
-    
+
 }
 
-.left div, .right div{
+.left li,
+.right li {
     margin-bottom: 15px;
+    align-items: left;
 }
 
-span{
-    margin-right:10px;
+span {
+    margin-right: 10px;
 }
 
-.accept,.reject,.remove{
+.accept,
+.reject,
+.remove {
     background-color: transparent;
     border: none;
     font-size: 20px;
     cursor: pointer;
 }
 
-.reject:hover,.remove:hover{
+
+.reject,
+.remove {
     color: red;
 }
-.accept:hover{
+
+.accept {
     color: rgb(2, 218, 2);
 }
 
-.fade-out {
-    opacity: 0;
-    transform: scale(0.9);
+h2 {
+    /* margin-right: 44px; */
+    text-align: center;
 }

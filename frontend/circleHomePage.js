@@ -21,11 +21,10 @@ function circleInfoAndRole() {
       let info = document.getElementById("circleInfo");
       info.innerHTML = data.name;
       let admin = document.getElementById("left");
-      let leave = document.getElementById('leave')
-      if (role != "Admin") {
+      let leave = document.getElementById("leave");
+      if (role !== "Admin") {
         admin.style.display = "none";
-      }
-      if (role == "Admin") {
+      } else {
         leave.style.display = "none";
       }
     })
@@ -120,7 +119,7 @@ function getRecommendations() {
       if (response.ok) {
         return response.json();
       } else {
-        let recoms = document.getElementById("recoms");
+        let recoms = document.getElementById("mid");
         recoms.innerHTML = `There are no available recommendations right now.`;
         recoms.style.backgroundColor = "white";
         recoms.style.color = "red";
@@ -129,10 +128,7 @@ function getRecommendations() {
     .then((data) => {
       let text = "";
       data.forEach((recommendation) => {
-        let likes = recommendation.numberOfLikes;
-        if (likes == null) {
-          likes = 0;
-        }
+        let likes = recommendation.numberOfLikes || 0;
         text += `
         <div class="recoms" id="recoms-${recommendation.id}" 
              style="background-color: #ffdcc8; border-radius: 15px; padding: 15px; margin: 10px auto; 
@@ -162,9 +158,6 @@ function getRecommendations() {
 
           </div>
         </div>`;
-
-
-
       });
       let mid = document.getElementById("mid");
       mid.innerHTML = text;
@@ -175,6 +168,7 @@ function getRecommendations() {
       console.error("Error fetching recommendations:", error);
     });
 }
+
 function addLikeListeners() {
   let recommendations = document.querySelectorAll(".recoms");
   recommendations.forEach((recommendation) => {
@@ -208,11 +202,11 @@ function incrementLike(recommendationId) {
     })
     .then((data) => {
       console.log("Like count updated successfully:", data);
-      getRecommendations()
+      getRecommendations();
     })
     .catch((error) => {
       console.error("Error updating like count:", error);
-      alert("you are already liked this recommendation");
+      alert("You have already liked this recommendation");
     });
 }
 
@@ -241,5 +235,4 @@ document.addEventListener("DOMContentLoaded", () => {
   circleInfoAndRole();
   addRecommendation();
   getRecommendations();
-  addLikeListeners();
 });
