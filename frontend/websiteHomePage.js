@@ -34,16 +34,19 @@ function frame2Loaded() {
     }
 }
 // Function to handle fetching and displaying join requests in frame 1
+
+
+// Function to get the correct icon based on the request status
 function fetchRequests(requestsDiv) {
     const token = localStorage.getItem("token");
 
     if (!requestsDiv) {
         console.error("Element with class .requests not found!");
-        return; // Exit the function early if the element is not found
+        return;
     }
 
-    // Clear any existing content before adding new data or error message
-    requestsDiv.innerHTML = '';
+    // Clear previous content
+    requestsDiv.innerHTML = "";
 
     if (!token) {
         const errorMessage = document.createElement("p");
@@ -58,8 +61,7 @@ function fetchRequests(requestsDiv) {
         headers: { Authorization: `Bearer ${token}` },
     })
         .then((response) =>
-            response.json().then((data) => ({ status: response.status, body: data }))
-        )
+            response.json().then((data) => ({ status: response.status, body: data })))
         .then(({ status, body }) => {
             if (status >= 200 && status < 300) {
                 if (body.length === 0) {
@@ -68,23 +70,25 @@ function fetchRequests(requestsDiv) {
                     noRequestsMessage.style.color = "gray";
                     requestsDiv.appendChild(noRequestsMessage);
                 } else {
-                    // Loop through each request and create a new div for it
-                    body.forEach((request, index) => {
-                        // Create a new div for each request with a dynamic class (circle1, circle2, etc.)
-                        const requestDiv = document.createElement("div");
-                        const circleNumber = index + 1; // This will generate circle1, circle2, etc.
-
-                        // Dynamically set the class name for each request div
-                        requestDiv.className = `circle${circleNumber}`;
-
-                        // Add content to the request div
-                        requestDiv.innerHTML = `
-                            <h5>${request.circleName}</h5>
-                            <i class="${getRequestIcon(request.status)}"></i>
-                        `;
-
-                        // Append the div to the parent container
-                        requestsDiv.appendChild(requestDiv);
+                    body.forEach((request) => {
+                    
+                        let text = `
+                        <div class="request-item" style="border: 1px solid #ccc; padding: 10px; margin-bottom: 10px; border-radius: 5px;">
+                            <div class="circle ${request.status}" style="display: inline-block; margin-right: 10px; text-align: center;">
+                                <h5 style="margin: 0; color: #333;">${request.circleName}</h5>
+                                <i class="fa ${getIconClass(request.status)}" style="font-size: 24px;"></i>
+                            </div>
+                            <p style="margin: 5px 0; color: #555;">${request.circleDesc}</p>
+                        </div>
+                    `;
+                    
+                    // Create a temporary div element to parse the HTML string
+                    let tempDiv = document.createElement('div');
+                    tempDiv.innerHTML = text;
+                    
+                    // Append the first child (the newly created element) to the requestsDiv
+                    requestsDiv.appendChild(tempDiv.firstElementChild);
+                    
                     });
                 }
             } else {
@@ -103,16 +107,24 @@ function fetchRequests(requestsDiv) {
         });
 }
 
-// Function to get the correct icon based on the request status
-function getRequestIcon(status) {
-    if (status === "approved") {
-        return "fa-solid fa-circle-check"; // Green check icon
-    } else if (status === "rejected") {
-        return "fa-regular fa-circle-xmark"; // Red cross icon
-    } else {
-        return "fa-solid fa-spinner"; // Spinner icon for pending status
+// Helper function to get the appropriate icon class based on the status
+function getIconClass(status) {
+    switch (status) {
+        case "Approved":
+            return "fa-circle-check";
+        case "Rejected":
+            return "fa-circle-xmark";
+        case "Pending":
+            return "fa-spinner fa-spin";
+        default:
+            return "fa-circle-question";
     }
 }
+
+
+
+
+
 
 
 // Function to handle fetching and displaying circles in frame 2

@@ -113,18 +113,19 @@ class RequestsPdo{
     }
 
     public function getRequestByUserAndCircle(int $userId, int $circleId): ?array {
-        $query = "SELECT * FROM requests WHERE userId = :userId AND circleId = :circleId";
+        $query = "SELECT * FROM requests WHERE userId = :userId AND circleId = :circleId AND status = 'Pending'";
         $stmt = $this->pdo->prepare($query);
-
+    
         $stmt->bindParam(':userId', $userId, PDO::PARAM_INT);
         $stmt->bindParam(':circleId', $circleId, PDO::PARAM_INT);
-
+    
         $stmt->execute();
-
+    
         $request = $stmt->fetch(PDO::FETCH_ASSOC);
-
+    
         return $request ?: null;
     }
+    
 
     public function getJoinRequestsByUserId(int $userId): array {
         $query = "

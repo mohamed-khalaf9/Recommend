@@ -2,6 +2,39 @@ let role = localStorage.getItem("role");
 let token = localStorage.getItem("token");
 let circleId = localStorage.getItem("circleId");
 
+
+
+function leaveCircle() {
+  let confirmation = confirm('You are about to leave');
+  if (confirmation) {
+    let url = `http://localhost/Recommend/backend/members/${circleId}`; 
+    fetch(url, {
+      method: 'DELETE',
+      headers: {
+        Authorization: `Bearer ${token}`, 
+      },
+    })
+      .then(response => {
+        if (response.ok) {
+          return response.json();
+        } else {
+          throw new Error('Failed to leave the circle'); 
+        }
+      })
+      .then(data => {
+        console.log(data);
+        alert('You have successfully left the circle');
+        window.location = 'webSiteHomePage.html';
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        alert('An error occurred while leaving the circle. Please try again.');
+      });
+  } else {
+    alert('You are still in the Circle');
+  }
+}
+
 function circleInfoAndRole() {
   let url = `http://localhost/Recommend/backend/circles/${circleId}`;
   fetch(url, {
@@ -41,6 +74,7 @@ function validateLink(link) {
     return false;
   }
 }
+
 
 function addRecommendation() {
   let add = document.getElementById("add");
