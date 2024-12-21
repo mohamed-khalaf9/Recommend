@@ -1,3 +1,4 @@
+
 document.addEventListener("DOMContentLoaded", () => {
     const form = document.getElementById("sign-in-form");
     const nameInput = document.getElementById("my-name");
