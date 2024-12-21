@@ -67,20 +67,19 @@ document.addEventListener("DOMContentLoaded", () => {
       passwordError.innerHTML = "";
       briefError.innerHTML = "";
       eduError.innerHTML = "";
+      
       // Validate name
-      if (data.name.length == 0) {
-          nameError.innerHTML = "*Required";
-          isValid = false;
-      } else if (data.name.length < 4) {
-         nameError.innerHTML = "*Name must be between 4 and 15 characters.";
-         isValid = false;
-      } 
-      else if (data.name.length > 15) {
-        nameError.innerHTML = "*Name must be between 4 and 15 characters.";
-        isValid = false;
-      } else {
-        nameError.innerHTML = "";
-      }
+if (data.name.length === 0) {
+  nameError.innerHTML = "*Required";
+  isValid = false;
+} else if (data.name.length < 2) {
+  nameError.innerHTML = "*Name must be at least 2 characters long.";
+  isValid = false;
+} else {
+  nameError.innerHTML = "";
+}
+
+    
   
       // Validate email
       const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
