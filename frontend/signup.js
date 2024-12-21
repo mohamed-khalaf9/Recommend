@@ -55,35 +55,45 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function validateForm(data) {
         let isValid = true;
-
+        let nameError = document.getElementById('nameError');
+        let emailError = document.getElementById('emailError');
+        let passwordError = document.getElementById('passwordError');
+        let briefError = document.getElementById("briefError");
+        let eduError = document.getElementById("eduError");
+        emailError.innerHTML = ""
+        nameError.innerHTML = ""
+        passwordError.innerHTML = ""
+        briefError.innerHTML = ""
+        eduError.innerHTML = ""
         // Validate name
         if (data.name.length < 4 || data.name.length > 15) {
-            alert("Name must be between 4 and 15 characters.");
+
+            nameError.innerHTML="*Name must be between 4 and 15 characters.";
             isValid = false;
         }
 
         // Validate email
         const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
         if (!emailRegex.test(data.email)) {
-            alert("Invalid email format.");
+            emailError.innerHTML="*Invalid email format.";
             isValid = false;
         }
 
         // Validate password
         if (data.password.length < 6 || data.password.length > 12) {
-            alert("Password must be between 6 and 12 characters.");
+            passwordError.innerHTML="*Password must be between 6 and 12 characters.";
             isValid = false;
         }
 
         // Validate education
         if (!data.education) {
-            alert("Education field is required.");
+            eduError.innerHTML="*Education field is required.";
             isValid = false;
         }
 
         // Validate brief
         if (!data.brief) {
-            alert("Brief field is required.");
+            briefError.innerHTML="*Brief field is required.";
             isValid = false;
         }
 
