@@ -109,3 +109,16 @@ h2 {
     /* margin-right: 44px; */
     text-align: center;
 }
+
+.home {
+    position: absolute;
+    right: 200px;
+    font-size: 25px;
+    border: none;
+    background-color: white;
+    color: #002c67;
+}
+.home:hover{
+    cursor: pointer;
+    color:#ff4213;
+}
