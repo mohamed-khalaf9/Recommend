@@ -6,10 +6,10 @@ use \Firebase\JWT\Key;
 
 class JwtHelper {
 
-    // Secret key used to encode and decode the JWT
-    private static $secretKey = "your_secret_key"; // Replace with a more secure key
+   
+    private static $secretKey = "$2b$10!W^n39sxA&Bz@45Xs3r@";
 
-    // Expiry time in seconds (e.g., 3600 seconds = 1 hour)
+   
     private static $expirationTime = 3600;
 
     /**
@@ -19,17 +19,17 @@ class JwtHelper {
      * @return string The generated JWT token.
      */
     public static function createToken($userId): string {
-        // Define the payload (data inside the token)
+        
         $issuedAt = time();
-        $expirationTime = $issuedAt + self::$expirationTime; // Token valid for 1 hour
+        $expirationTime = $issuedAt + self::$expirationTime; 
         $payload = array(
-            "iss" => "your_issuer_name",  // Issuer of the token
-            "iat" => $issuedAt,           // Issued at time
-            "exp" => $expirationTime,     // Expiration time
-            "userId" => $userId           // User identifier
+            "iss" => "your_issuer_name",  
+            "iat" => $issuedAt,           
+            "exp" => $expirationTime,     
+            "userId" => $userId           
         );
 
-        // Encode the token using the secret key
+       
         return JWT::encode($payload, self::$secretKey, 'HS256');
     }
 
