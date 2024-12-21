@@ -13,7 +13,7 @@
 
 <body>
     <div class="nav">
-        <img src="media/ui-project-dr-moheb.png" alt="THE PROJECT LOGO">
+        <img src="media/ui project dr.moheb.png" alt="THE PROJECT LOGO">
         <a href="index.html"><i class="fa-solid fa-house" id="home-icon"></i></a>
     </div>
     <i class="fa-solid fa-user" id="prof-icon"></i>
@@ -22,23 +22,28 @@
     <form name="signInForm" id="sign-in-form" method="post">
         <div>
             <label for="my-name">Name</label>
-            <input type="text" name="name" id="my-name" class="data" required>
+            <input type="text" name="name" id="my-name" class="data" >
+            <p id="nameError"></p>
         </div>
         <div>
             <label for="my-email">Email</label>
-            <input type="email" name="email" id="my-email" class="data" required>
+            <input type="text" name="email" id="my-email" class="data"  >
+            <p id="emailError"></p>
         </div>
         <div>
             <label for="my-pass">Password</label>
-            <input type="password" name="password" id="my-pass" class="data" required>
+            <input type="password" name="password" id="my-pass" class="data" >
+            <p id="passwordError"></p>
         </div>
         <div>
             <label for="college">Education</label>
-            <input type="text" name="education" id="college" class="data" required>
+            <input type="text" name="education" id="college" class="data" >
+            <p id="eduError"></p>
         </div>
         <div>
             <label for="brief">Brief</label>
-            <input type="text" name="brief" id="brief" class="data" required>
+            <input type="text" name="brief" id="brief" class="data" >
+            <p id="briefError"></p>
         </div>
         <button type="submit" id="sign-up">Sign Up</button>
         <p id="pForm">Already Registered?<a href="login.html"><b> Login</b></a></p>
