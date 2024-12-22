@@ -22,7 +22,7 @@
     <form name="signInForm" id="sign-in-form" method="post">
         <div>
             <label for="my-name">Name</label>
-            <input type="text" name="name" id="my-name" class="data" >
+            <input type="text" name="name" id="my-name" class="data" onkeypress="return justChar(event)">
             <p id="nameError"></p>
         </div>
         <div>
