@@ -119,16 +119,5 @@ recommend/
 4. Push to the branch
 5. Create a new Pull Request
 
-## License
 
-[Specify license information here]
 ```
-
-# Notes
-
-This README was created based on the provided codebase context, focusing on the Recommend project's architecture, features, and setup. The README provides a comprehensive overview of the project structure, key components, and functionality. The information was primarily sourced from the wiki pages and code snippets provided in the context.
-
-Wiki pages you might want to explore:
-- [Overview (mohamed-khalaf9/Recommend)](/wiki/mohamed-khalaf9/Recommend#1)
-- [Admin Request Management (mohamed-khalaf9/Recommend)](/wiki/mohamed-khalaf9/Recommend#5.2)
-- [Database Schema (mohamed-khalaf9/Recommend)](/wiki/mohamed-khalaf9/Recommend#9)
